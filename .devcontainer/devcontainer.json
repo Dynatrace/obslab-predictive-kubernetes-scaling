@@ -1,0 +1,59 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/kubernetes-helm
+{
+  "name": "Predictive Kubernetes Scaling Demo",
+  "dockerFile": "Dockerfile",
+  // privileged mode & host network are necessary for docker in docker support
+  "runArgs": [
+    "--init",
+    "--privileged",
+    "--network=host"
+  ],
+  "mounts": [
+    "source=/var/run/docker.sock,target=/var/run/docker-host.sock,type=bind"
+  ],
+  "overrideCommand": false,
+  "remoteUser": "vscode",
+  "customizations": {
+    "codespaces": {
+      "openFiles": [
+        "README.md"
+      ]
+    },
+    "vscode": {
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "zsh"
+      },
+      "extensions": [
+        "ms-azuretools.vscode-docker",
+        "ms-kubernetes-tools.vscode-kubernetes-tools",
+        "mutantdino.resourcemonitor",
+      ]
+    }
+  },
+
+  "hostRequirements": {
+    "cpus": 2
+  },
+  "postCreateCommand": ".devcontainer/post-create.sh",
+  "secrets": {
+    "DYNATRACE_ENVIRONMENT_ID": {
+      description: "The id of your Dynatrace tenant. E.g. `abc12345` from `https://abc12345.live.apps.dynatrace.com`"
+    },
+    "DYNATRACE_ENVIRONMENT": {
+      "description": "Either `live`, `sprint` or `dev`. If unsure, use `live`"
+    },
+    "DYNATRACE_API_TOKEN": {
+      "description": "Dynatrace access token with these permissions: `apiTokens.read` & `apiTokens.write`"
+    },
+    "DYNATRACE_PLATFORM_TOKEN": {
+      "description": "Dynatrace platform token with these permissions: `davis-copilot:conversations:execute`"
+    },
+    "DYNATRACE_OAUTH_CLIENT_ID": {
+      "description": "Dynatrace OAuth client id. Needs these permissions: `automation:workflows:read`, `automation:workflows:write`, `document:documents:write`, `document:documents:read`, `document:documents:delete`, `app-engine:edge-connects:connect`, `app-engine:edge-connects:write`, `app-engine:edge-connects:read`, `app-engine:edge-connects:delete`, `oauth2:clients:manage`, `settings:objects:read`, `settings:objects:write`, `storage:events:write`"
+    },
+    "DYNATRACE_OAUTH_CLIENT_SECRET": {
+      "description": "Dynatrace OAuth client secret. See `DYNATRACE_OAUTH_CLIENT_ID` for permissions"
+    }
+  }
+}
