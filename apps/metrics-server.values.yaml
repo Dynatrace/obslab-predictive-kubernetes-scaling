@@ -1,0 +1,11 @@
+# See https://github.com/kubernetes-sigs/metrics-server#scaling
+resources:
+  requests:
+    cpu: 50m
+    memory: 100Mi
+  limits:
+    cpu: 50m
+    memory: 100Mi
+
+args:
+  - --kubelet-insecure-tls
