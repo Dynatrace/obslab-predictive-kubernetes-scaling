@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: anomaly-simulation
+  namespace: horizontal-scaling
+  labels:
+    app: anomaly-simulation
+  annotations:
+    dt.owner: 'predictive-kubernetes-scaling'
+
+    # Required
+    predictive-kubernetes-scaling.observability-labs.dynatrace.com/enabled: 'true'
+    predictive-kubernetes-scaling.observability-labs.dynatrace.com/managed-by-repo: 'Dynatrace/obslab-predictive-kubernetes-scaling'
+    predictive-kubernetes-scaling.observability-labs.dynatrace.com/uuid: '29495ece-204c-49ca-84e3-1066810cffeb'
+    predictive-kubernetes-scaling.observability-labs.dynatrace.com/managed-by-hpa: 'anomaly-simulation'
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: anomaly-simulation
+  template:
+    metadata:
+      labels:
+        app: anomaly-simulation
+    spec:
+      containers:
+        - name: anomaly-simulation
+          image: ghcr.io/dynatrace/anomaly-simulation-service:v1.0.0
+          ports:
+            - containerPort: 8080
+          resources:
+            requests:
+              memory: 5Mi
+              cpu: 40m
+            limits:
+              memory: 5Mi
+              cpu: 40m
