@@ -7,13 +7,17 @@ metadata:
     app: anomaly-simulation
   annotations:
     dt.owner: 'predictive-kubernetes-scaling'
+
+    # Required
     predictive-kubernetes-scaling.observability-labs.dynatrace.com/enabled: 'true'
     predictive-kubernetes-scaling.observability-labs.dynatrace.com/managed-by-repo: 'Dynatrace/obslab-predictive-kubernetes-scaling'
     predictive-kubernetes-scaling.observability-labs.dynatrace.com/uuid: '4bc1299a-58ae-4c19-9533-b19c1b8ca57f'
-    predictive-kubernetes-scaling.observability-labs.dynatrace.com/target-utilization: '80-90'
-    predictive-kubernetes-scaling.observability-labs.dynatrace.com/target-cpu-utilization: '80-90'
-    predictive-kubernetes-scaling.observability-labs.dynatrace.com/target-memory-utilization: '80-90'
-    predictive-kubernetes-scaling.observability-labs.dynatrace.com/scale-down: 'true'
+
+    # Optional
+    predictive-kubernetes-scaling.observability-labs.dynatrace.com/target-utilization: '80-90' # Default: 80-90
+    predictive-kubernetes-scaling.observability-labs.dynatrace.com/target-cpu-utilization: '80-90' # Overrides target-utilization
+    predictive-kubernetes-scaling.observability-labs.dynatrace.com/target-memory-utilization: '80-90' # Overrides target-utilization
+    predictive-kubernetes-scaling.observability-labs.dynatrace.com/scale-down: 'true' # Default: true
 spec:
   replicas: 1
   selector:
