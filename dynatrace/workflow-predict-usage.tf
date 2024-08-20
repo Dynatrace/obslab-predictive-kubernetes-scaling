@@ -1,6 +1,6 @@
 data "http" "get_edge_connect" {
   method = "GET"
-  url    = "${var.dynatrace_live_url}/api/v2/settings/objects?schemaIds=app:dynatrace.kubernetes.connector:connection&filter=value.name='${var.codespace_name}-hpa-reader'"
+  url    = "${var.dynatrace_live_url}/api/v2/settings/objects?schemaIds=app:dynatrace.kubernetes.connector:connection&filter=value.name='${var.codespace_name}'"
 
   request_headers = {
     Accept        = "application/json"

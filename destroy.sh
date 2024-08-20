@@ -22,6 +22,7 @@ export TF_VAR_github_token=$GITHUB_TOKEN
 export TF_VAR_dynatrace_platform_token=$DYNATRACE_PLATFORM_TOKEN
 export TF_VAR_dynatrace_live_url=$DYNATRACE_LIVE_URL
 export TF_VAR_dynatrace_environment_id=$DYNATRACE_ENVIRONMENT_ID
+export TF_VAR_codespace_name=$CODESPACE_NAME
 
 export DYNATRACE_AUTOMATION_CLIENT_ID=$DYNATRACE_OAUTH_CLIENT_ID
 export DYNATRACE_AUTOMATION_CLIENT_SECRET=$DYNATRACE_OAUTH_CLIENT_SECRET
@@ -35,6 +36,6 @@ cd ..
 ### Kubernetes Cluster ###
 ##########################
 
-kubectl delete --namespace dynatrace edgeconnect $CODESPACE_NAME-hpa-reader
+kubectl delete --namespace dynatrace edgeconnect $CODESPACE_NAME
 
 kind delete cluster --name predictive-kubernetes-scaling-demo

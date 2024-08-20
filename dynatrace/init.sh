@@ -67,7 +67,7 @@ kubectl apply --filename kubernetes/dynakube.yaml
 ###############################
 
 kubectl --namespace dynatrace \
-  create secret generic "edge-connect-$CODESPACE_NAME-hpa-reader-credentials" \
+  create secret generic "edge-connect-$CODESPACE_NAME-credentials" \
   --from-literal=oauth-client-id="$DYNATRACE_OAUTH_CLIENT_ID" \
   --from-literal=oauth-client-secret="$DYNATRACE_OAUTH_CLIENT_SECRET"
 
