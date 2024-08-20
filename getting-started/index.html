@@ -1,0 +1,693 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="..">
+      
+      
+        <link rel="next" href="../cleanup/">
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.29">
+    
+    
+      
+        <title>2. Getting Started - Dynatrace Observability Lab: Predictive Auto-Scaling for Kubernetes Workloads</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.76a95c52.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#getting-started" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Dynatrace Observability Lab: Predictive Auto-Scaling for Kubernetes Workloads" class="md-header__button md-logo" aria-label="Dynatrace Observability Lab: Predictive Auto-Scaling for Kubernetes Workloads" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Dynatrace Observability Lab: Predictive Auto-Scaling for Kubernetes Workloads
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              2. Getting Started
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Dynatrace Observability Lab: Predictive Auto-Scaling for Kubernetes Workloads" class="md-nav__button md-logo" aria-label="Dynatrace Observability Lab: Predictive Auto-Scaling for Kubernetes Workloads" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    Dynatrace Observability Lab: Predictive Auto-Scaling for Kubernetes Workloads
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1. About
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    2. Getting Started
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    2. Getting Started
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      Requirements
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-prepare-your-environment" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Prepare Your Environment
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-create-your-development-environment" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Create Your Development Environment
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-explore-what-has-been-deployed" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Explore What Has Been Deployed
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-grab-a-coffee" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Grab a Coffee
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-generate-some-load" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Generate Some Load
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-watch-the-magic-happen" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. Watch the Magic Happen
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-troubleshooting" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. Troubleshooting
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cleanup/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3. Cleanup
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../whats-next/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4. What's Next?
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      Requirements
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-prepare-your-environment" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Prepare Your Environment
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-create-your-development-environment" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Create Your Development Environment
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-explore-what-has-been-deployed" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Explore What Has Been Deployed
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-grab-a-coffee" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Grab a Coffee
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-generate-some-load" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Generate Some Load
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-watch-the-magic-happen" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. Watch the Magic Happen
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-troubleshooting" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. Troubleshooting
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="getting-started">Getting Started</h1>
+<h2 id="requirements">Requirements</h2>
+<ul>
+<li>A <strong>Grail enabled Dynatrace SaaS Tenant</strong>
+  where <a href="https://www.dynatrace.com/platform/artificial-intelligence/">Davis CoPilot</a> is enabled.</li>
+<li>A <strong>GitHub account</strong> to interact with the demo repository.</li>
+</ul>
+<h2 id="1-prepare-your-environment">1. Prepare Your Environment</h2>
+<p>The <a href="https://github.com/features/codespaces">GitHub Codespace</a>, you will create within this demo, will automatically set
+up a local Kubernetes cluster and deploy the necessary Dynatrace resources. To make this work, you'll need to provide
+the below credentials and settings.</p>
+<ul>
+<li>A <a href="https://docs.dynatrace.com/docs/dynatrace-api/basics/dynatrace-api-authentication#dynatrace-api-tokens-and-authentication">Dynatrace API token</a>
+to generate <a href="../dynatrace/tokens.tf">other tokens used in this demo</a>. Permissions:<ul>
+<li><code>apiTokens.read</code></li>
+<li><code>apiTokens.write</code></li>
+</ul>
+</li>
+<li>A <a href="https://docs.dynatrace.com/docs/platform-modules/automations/cloud-automation/setup-cloud-automation/authentication#client">Dynatrace OAuth 2.0 client</a>
+to deploy the workflows and notebook used in this demo. Permissions:<ul>
+<li><code>automation:workflows:write</code></li>
+<li><code>automation:workflows:read</code></li>
+<li><code>document:documents:write</code></li>
+<li><code>document:documents:read</code></li>
+<li><code>document:documents:delete</code></li>
+<li><code>app-engine:edge-connects:connect</code></li>
+<li><code>app-engine:edge-connects:write</code></li>
+<li><code>app-engine:edge-connects:read</code></li>
+<li><code>app-engine:edge-connects:delete</code></li>
+<li><code>oauth2:clients:manage</code></li>
+<li><code>settings:objects:read</code></li>
+<li><code>settings:objects:write</code></li>
+</ul>
+</li>
+<li>A Dynatrace Platform token to trigger the Davis CoPilot from the demo workflow. Permissions:<ul>
+<li><code>davis-copilot:conversations:execute</code></li>
+</ul>
+</li>
+<li><a href="https://developer.dynatrace.com/develop/functions/allow-outbound-connections/">Allow an outbound connection from Dynatrace</a>
+  to <code>api.github.com</code> so that the demo workflow can communicate with GitHub.</li>
+</ul>
+<h2 id="2-create-your-development-environment">2. Create Your Development Environment</h2>
+<ul>
+<li>Fork <a href="https://github.com/Dynatrace/obslab-predictive-kubernetes-scaling/tree/main">this repository</a> to your GitHub account. This will allow you to make changes and submit pull requests
+  later on.</li>
+<li>Adjust the <code>predictive-kubernetes-scaling.observability-labs.dynatrace.com/managed-by-repo</code> annotations in </li>
+<li><a href="../apps/horizontal-scaling/deployment.yaml"><code>apps/horizontal-scaling/deployment.yaml</code></a> and
+  <a href="../apps/vertical-scaling/deployment.yaml"><code>apps/vertical-scaling/deployment.yaml</code></a> to match your forked repository.</li>
+<li>Create a new Codespace<ul>
+<li>In your forked repository, click the green <code>Code</code> button and switch to the <code>Codespaces</code> tab.</li>
+<li>Click <code>...</code> and select <code>New with options...</code>.<blockquote>
+<p>⚠️ Don't click the green <code>Create codespace</code> button in this step.</p>
+</blockquote>
+</li>
+<li>Enter the credentials you generated in <a href="#1-prepare-your-environment">step 1</a>.</li>
+<li>Click <code>Create Codespace</code>.</li>
+</ul>
+</li>
+<li>Wait for the Setup to complete. The Codespace will run a <code>postCreate</code> command to initialize your environment. This may
+  take a few minutes. You'll know it's ready when the <code>zsh</code> shell is shown again.<ul>
+<li>If you want to check the progress, you can press <code>Ctrl + Shift + P</code> and type <code>Creation Log</code> to see the setup logs
+  once the Codespace has initialized.</li>
+</ul>
+</li>
+</ul>
+<h2 id="3-explore-what-has-been-deployed">3. Explore What Has Been Deployed</h2>
+<p>Your Codespace has now deployed the following resources:</p>
+<ul>
+<li>A local Kubernetes (<a href="https://kind.sigs.k8s.io/">kind</a>) cluster monitored by Dynatrace, with some pre-deployed apps
+  that will be used later in the demo.</li>
+<li>Three <a href="https://www.dynatrace.com/platform/workflows/">Dynatrace workflows</a>:<ul>
+<li><strong>Predict Kubernetes Resource Usage</strong>: This workflow predicts the future resource usage of Kubernetes workloads
+  using Davis predictive AI. If a workload is likely to exceed its resource quotas, the workflow creates a custom
+  Davis event with all necessary information.</li>
+<li><strong>Commit Davis Suggestions</strong>: Triggered by the predictive workflow's events, this workflow uses Davis CoPilot and
+  the GitHub for Workflows app to create pull requests for remediation suggestions.</li>
+<li><strong>React to Resource Saturation</strong>: If the prediction actually misses some resource spikes, this workflow will get
+  alerted via the automatically created Davis problem and will trigger the prediction workflow to immediately react
+  and create a pull request. This workflow is disabled by default to avoid unwanted triggers of the prediction
+  workflow.</li>
+</ul>
+</li>
+<li>A <a href="https://www.dynatrace.com/platform/notebooks/">Dynatrace notebook</a> that provides a more in-depth overview of how
+  the deployed workflows work.</li>
+<li>A <a href="https://www.dynatrace.com/platform/dashboards/">Dynatrace dashboard</a> that shows a summary of all predictions and 
+  their accuracy.</li>
+</ul>
+<h2 id="4-grab-a-coffee">4. Grab a Coffee</h2>
+<p>Before moving on, Davis AI needs around 20 minutes to analyze your Kubernetes workloads and establish a baseline for
+predictive analysis. You can check its progress by navigating to the newly deployed "Predictive Kubernetes Scaling"
+notebook and running the DQL query in the "2. Predict Resource Usage" step. If the results indicate that Davis AI is
+ready, you can proceed to <a href="#5-generate-some-load">step 5</a>.</p>
+<p>Just make sure that your Codespace does not expire within that time by e.g. clicking into the window from time to time.
+Check out the <a href="https://docs.github.com/en/codespaces/setting-your-user-preferences/setting-your-timeout-period-for-github-codespaces">GitHub Codespace documentation</a>
+to read more about timeout periods for Codespaces and how to configure them.</p>
+<h2 id="5-generate-some-load">5. Generate Some Load</h2>
+<blockquote>
+<p>⚠ Before proceeding, ensure Davis AI has finished creating a baseline for your workloads
+(see <a href="#4-grab-a-coffee">step 4</a> for more information).</p>
+</blockquote>
+<p>Now, let's simulate a scenario where workload increases and triggers a resource prediction:</p>
+<ul>
+<li>Go to your Codespace and open the terminal window.</li>
+<li>Run <code>./generate-load.sh</code> to put some load on the deployed demo app. You can choose between two options here:<ul>
+<li><code>horizontal-scaling</code>: Generates load on a deployment that is scaled by a <code>HorizontalPodAutoscaler</code> (HPA). In that
+  case, the max replicas of the HPA will be adjusted by the workflow.</li>
+<li><code>vertical-scaling</code>: Generates load on a standard deployment that is not scaled by any other resource. In that
+  case,
+  the resource quotas of the deployment will be adjusted by the workflow.</li>
+</ul>
+</li>
+<li>Wait a few minutes again as it will take a bit for the Davis resource prediction to actually exceed the defined
+  quotas. You can track progress in the "Predictive Kubernetes Scaling" notebook again. Usually, the CPU will spike
+  first and memory will stay stable most of the time.</li>
+</ul>
+<h2 id="6-watch-the-magic-happen">6. Watch the Magic Happen</h2>
+<p>By now, the deployed Dynatrace workflows should have sprung into action, and you should find an auto-remediation pull
+request in your forked repository. Let's explore what happened behind the scenes:</p>
+<ul>
+<li>Navigate to Workflows:  Press <code>Ctrl + K</code> (or <code>Cmd + K</code> on Mac) and type "Workflows" to open the Dynatrace Workflows
+  app.</li>
+<li>Check the "Predict Kubernetes Resource Usage" Workflow:<ul>
+<li>Find the "Predict Kubernetes Resource Usage" workflow in the list and click on it.</li>
+<li>Click on <code>Run</code> in the top right of the toolbar to trigger the workflow.</li>
+<li>Wait for the execution to see details of each step. The final step should be emitting a <code>CUSTOM_INFO</code> Davis event,
+  which triggers the next workflow.</li>
+</ul>
+</li>
+<li>Check the "Commit Davis Prediction" Workflow:<ul>
+<li>Navigate back to the workflows home page.</li>
+<li>Find the "Commit Davis Prediction" workflow, click the three dots in the top right and select
+  <code>View execution history</code>.</li>
+<li>Examine each step to understand how the workflow applied Davis CoPilot's suggestions.</li>
+</ul>
+</li>
+<li>Review the Pull Request:<ul>
+<li>Go to your forked repository on GitHub.</li>
+<li>You should see an open pull request with the changes made by the workflow.</li>
+</ul>
+</li>
+</ul>
+<h2 id="7-troubleshooting">7. Troubleshooting</h2>
+<p>If any steps failed:</p>
+<ul>
+<li>Consult the Notebook: The "Predictive Kubernetes Scaling" notebook can provide valuable insights into potential
+  issues.</li>
+<li>Raise an Issue: Feel free to raise an issue in this repository for assistance.</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.fe8b6f2b.min.js"></script>
+      
+    
+  </body>
+</html>
