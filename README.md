@@ -5,4 +5,4 @@ reactive but also prone to errors. In this demo we harness the power of Dynatrac
 resource bottlenecks and automatically open pull requests to scale applications. This proactive approach minimizes
 downtime, helps you to optimize resource utilization, and ensures your applications perform at their best.
 
-Read more and start your hands-on experience [here](TODO).
+Read more and start your hands-on experience [here](https://dynatrace.github.io/obslab-predictive-kubernetes-scaling).

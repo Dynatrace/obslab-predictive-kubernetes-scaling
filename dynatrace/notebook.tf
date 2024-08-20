@@ -197,7 +197,7 @@ locals {
           - **Apply Suggestions with Davis CoPilot**: The workflow uses [Davis CoPilot](https://www.dynatrace.com/news/blog/hypermodal-ai-dynatrace-expands-davis-ai-with-davis-copilot/) to apply the scaling suggestions to the fetched manifest. This step intelligently modifies the manifest to reflect the required resource adjustments.
           - **Create a Pull Request on GitHub**: Finally, the workflow employs the GitHub for Workflows app to create a pull request on GitHub, proposing the changes to the deployment manifest. This PR can then be reviewed and merged to implement the scaling updates in your Kubernetes environment.
 
-          TODO image
+          ![GitHub Pull Request](https://raw.githubusercontent.com/Dynatrace/obslab-predictive-kubernetes-scaling/main/docs/images/pull-request.png)
         EOT
       },
       {
