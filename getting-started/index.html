@@ -570,21 +570,21 @@
 <h2 id="requirements">Requirements<a class="headerlink" href="#requirements" title="Permanent link">#</a></h2>
 <ul>
 <li>A <strong>Grail enabled Dynatrace SaaS Tenant</strong>
-  where <a href="https://www.dynatrace.com/platform/artificial-intelligence/">Davis CoPilot</a> is enabled.</li>
+  where <a href="https://www.dynatrace.com/platform/artificial-intelligence/" target="_blank">Davis CoPilot</a> is enabled.</li>
 <li>A <strong>GitHub account</strong> to interact with the demo repository.</li>
 </ul>
 <h2 id="1-prepare-your-environment">1. Prepare Your Environment<a class="headerlink" href="#1-prepare-your-environment" title="Permanent link">#</a></h2>
-<p>The <a href="https://github.com/features/codespaces">GitHub Codespace</a>, you will create within this demo, will automatically set
+<p>The <a href="https://github.com/features/codespaces" target="_blank">GitHub Codespace</a>, you will create within this demo, will automatically set
 up a local Kubernetes cluster and deploy the necessary Dynatrace resources. To make this work, you'll need to provide
 the below credentials and settings.</p>
 <ul>
-<li>A <a href="https://docs.dynatrace.com/docs/dynatrace-api/basics/dynatrace-api-authentication#dynatrace-api-tokens-and-authentication">Dynatrace API token</a>
-to generate <a href="https://github.com/Dynatrace/obslab-predictive-kubernetes-scaling/blob/main/dynatrace/tokens.tf">other tokens used in this demo</a>. Permissions:<ul>
+<li>A <a href="https://docs.dynatrace.com/docs/dynatrace-api/basics/dynatrace-api-authentication#dynatrace-api-tokens-and-authentication" target="_blank">Dynatrace API token</a>
+to generate <a href="https://github.com/Dynatrace/obslab-predictive-kubernetes-scaling/blob/main/dynatrace/tokens.tf" target="_blank">other tokens used in this demo</a>. Permissions:<ul>
 <li><code>apiTokens.read</code></li>
 <li><code>apiTokens.write</code></li>
 </ul>
 </li>
-<li>A <a href="https://docs.dynatrace.com/docs/platform-modules/automations/cloud-automation/setup-cloud-automation/authentication#client">Dynatrace OAuth 2.0 client</a>
+<li>A <a href="https://docs.dynatrace.com/docs/platform-modules/automations/cloud-automation/setup-cloud-automation/authentication#client" target="_blank">Dynatrace OAuth 2.0 client</a>
 to deploy the workflows and notebook used in this demo. Permissions:<ul>
 <li><code>automation:workflows:write</code></li>
 <li><code>automation:workflows:read</code></li>
@@ -604,12 +604,12 @@ to deploy the workflows and notebook used in this demo. Permissions:<ul>
 <li><code>davis-copilot:conversations:execute</code></li>
 </ul>
 </li>
-<li><a href="https://developer.dynatrace.com/develop/functions/allow-outbound-connections/">Allow an outbound connection from Dynatrace</a>
+<li><a href="https://developer.dynatrace.com/develop/functions/allow-outbound-connections/" target="_blank">Allow an outbound connection from Dynatrace</a>
   to <code>api.github.com</code> so that the demo workflow can communicate with GitHub.</li>
 </ul>
 <h2 id="2-create-your-development-environment">2. Create Your Development Environment<a class="headerlink" href="#2-create-your-development-environment" title="Permanent link">#</a></h2>
 <ul>
-<li>Fork <a href="https://github.com/Dynatrace/obslab-predictive-kubernetes-scaling/tree/main">this repository</a> to your GitHub account. This will allow you to make changes and submit pull requests
+<li>Fork <a href="https://github.com/Dynatrace/obslab-predictive-kubernetes-scaling/tree/main" target="_blank">this repository</a> to your GitHub account. This will allow you to make changes and submit pull requests
   later on.</li>
 <li>Adjust the <code>predictive-kubernetes-scaling.observability-labs.dynatrace.com/managed-by-repo</code> annotations in </li>
 <li><a href="../apps/horizontal-scaling/deployment.yaml"><code>apps/horizontal-scaling/deployment.yaml</code></a> and
