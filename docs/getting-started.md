@@ -57,9 +57,9 @@ to deploy the workflows and notebook used in this demo. Permissions:
 
 Your Codespace has now deployed the following resources:
 
-- A local Kubernetes ([kind](https://kind.sigs.k8s.io/)) cluster monitored by Dynatrace, with some pre-deployed apps
+- A local Kubernetes ([kind](https://kind.sigs.k8s.io/){target="_blank"}) cluster monitored by Dynatrace, with some pre-deployed apps
   that will be used later in the demo.
-- Three [Dynatrace workflows](https://www.dynatrace.com/platform/workflows/):
+- Three [Dynatrace workflows](https://www.dynatrace.com/platform/workflows/){target="_blank"}:
     - **Predict Kubernetes Resource Usage**: This workflow predicts the future resource usage of Kubernetes workloads
       using Davis predictive AI. If a workload is likely to exceed its resource quotas, the workflow creates a custom
       Davis event with all necessary information.
@@ -69,9 +69,9 @@ Your Codespace has now deployed the following resources:
       alerted via the automatically created Davis problem and will trigger the prediction workflow to immediately react
       and create a pull request. This workflow is disabled by default to avoid unwanted triggers of the prediction
       workflow.
-- A [Dynatrace notebook](https://www.dynatrace.com/platform/notebooks/) that provides a more in-depth overview of how
+- A [Dynatrace notebook](https://www.dynatrace.com/platform/notebooks/){target="_blank"} that provides a more in-depth overview of how
   the deployed workflows work.
-- A [Dynatrace dashboard](https://www.dynatrace.com/platform/dashboards/) that shows a summary of all predictions and 
+- A [Dynatrace dashboard](https://www.dynatrace.com/platform/dashboards/){target="_blank"} that shows a summary of all predictions and 
   their accuracy.
 
 ## 4. Grab a Coffee
@@ -82,7 +82,7 @@ notebook and running the DQL query in the "2. Predict Resource Usage" step. If t
 ready, you can proceed to [step 5](#5-generate-some-load).
 
 Just make sure that your Codespace does not expire within that time by e.g. clicking into the window from time to time.
-Check out the [GitHub Codespace documentation](https://docs.github.com/en/codespaces/setting-your-user-preferences/setting-your-timeout-period-for-github-codespaces)
+Check out the [GitHub Codespace documentation](https://docs.github.com/en/codespaces/setting-your-user-preferences/setting-your-timeout-period-for-github-codespaces){target="_blank"}
 to read more about timeout periods for Codespaces and how to configure them.
 
 ## 5. Generate Some Load
