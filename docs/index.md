@@ -23,6 +23,6 @@ ensure smooth integration into your specific environment:
   account. While running this demo in a GitHub Codespace is free for most users due to generous usage limits and default
   billing settings, we recommend deleting the Codespace after completing the tutorial to avoid potential future charges
   if you exceed the free tier. To delete your Codespace, go to https://github.com/codespaces. For more information, see
-  the [GitHub Codespaces documentation](https://docs.github.com/en/codespaces/overview).
+  the [GitHub Codespaces documentation](https://docs.github.com/en/codespaces/overview){target="_blank"}.
 - **Davis CoPilot API Usage**: This demo utilizes Davis CoPilot API calls for its generative AI capabilities. These
   calls might cause costs in the future.
