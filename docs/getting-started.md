@@ -13,7 +13,7 @@ up a local Kubernetes cluster and deploy the necessary Dynatrace resources. To m
 the below credentials and settings.
 
 - A [Dynatrace API token](https://docs.dynatrace.com/docs/dynatrace-api/basics/dynatrace-api-authentication#dynatrace-api-tokens-and-authentication)
-to generate [other tokens used in this demo](../dynatrace/tokens.tf). Permissions:
+to generate [other tokens used in this demo](https://github.com/Dynatrace/obslab-predictive-kubernetes-scaling/blob/main/dynatrace/tokens.tf). Permissions:
     - `apiTokens.read`
     - `apiTokens.write`
 - A [Dynatrace OAuth 2.0 client](https://docs.dynatrace.com/docs/platform-modules/automations/cloud-automation/setup-cloud-automation/authentication#client)
