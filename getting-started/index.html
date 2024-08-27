@@ -612,8 +612,8 @@ to deploy the workflows and notebook used in this demo. Permissions:<ul>
 <li>Fork <a href="https://github.com/Dynatrace/obslab-predictive-kubernetes-scaling/tree/main" target="_blank">this repository</a> to your GitHub account. This will allow you to make changes and submit pull requests
   later on.</li>
 <li>Adjust the <code>predictive-kubernetes-scaling.observability-labs.dynatrace.com/managed-by-repo</code> annotations in </li>
-<li><a href="../apps/horizontal-scaling/deployment.yaml"><code>apps/horizontal-scaling/deployment.yaml</code></a> and
-  <a href="../apps/vertical-scaling/deployment.yaml"><code>apps/vertical-scaling/deployment.yaml</code></a> to match your forked repository.</li>
+<li><a href="https://github.com/Dynatrace/obslab-predictive-kubernetes-scaling/blob/main/apps/horizontal-scaling/deployment.yaml" target="_blank"><code>apps/horizontal-scaling/deployment.yaml</code></a> and
+  <a href="https://github.com/Dynatrace/obslab-predictive-kubernetes-scaling/blob/main/apps/vertical-scaling/deployment.yaml" target="_blank"><code>apps/vertical-scaling/deployment.yaml</code></a> to match your forked repository.</li>
 <li>Create a new Codespace<ul>
 <li>In your forked repository, click the green <code>Code</code> button and switch to the <code>Codespaces</code> tab.</li>
 <li>Click <code>...</code> and select <code>New with options...</code>.<blockquote>
@@ -634,9 +634,9 @@ to deploy the workflows and notebook used in this demo. Permissions:<ul>
 <h2 id="3-explore-what-has-been-deployed">3. Explore What Has Been Deployed<a class="headerlink" href="#3-explore-what-has-been-deployed" title="Permanent link">#</a></h2>
 <p>Your Codespace has now deployed the following resources:</p>
 <ul>
-<li>A local Kubernetes (<a href="https://kind.sigs.k8s.io/">kind</a>) cluster monitored by Dynatrace, with some pre-deployed apps
+<li>A local Kubernetes (<a href="https://kind.sigs.k8s.io/" target="_blank">kind</a>) cluster monitored by Dynatrace, with some pre-deployed apps
   that will be used later in the demo.</li>
-<li>Three <a href="https://www.dynatrace.com/platform/workflows/">Dynatrace workflows</a>:<ul>
+<li>Three <a href="https://www.dynatrace.com/platform/workflows/" target="_blank">Dynatrace workflows</a>:<ul>
 <li><strong>Predict Kubernetes Resource Usage</strong>: This workflow predicts the future resource usage of Kubernetes workloads
   using Davis predictive AI. If a workload is likely to exceed its resource quotas, the workflow creates a custom
   Davis event with all necessary information.</li>
@@ -648,9 +648,9 @@ to deploy the workflows and notebook used in this demo. Permissions:<ul>
   workflow.</li>
 </ul>
 </li>
-<li>A <a href="https://www.dynatrace.com/platform/notebooks/">Dynatrace notebook</a> that provides a more in-depth overview of how
+<li>A <a href="https://www.dynatrace.com/platform/notebooks/" target="_blank">Dynatrace notebook</a> that provides a more in-depth overview of how
   the deployed workflows work.</li>
-<li>A <a href="https://www.dynatrace.com/platform/dashboards/">Dynatrace dashboard</a> that shows a summary of all predictions and 
+<li>A <a href="https://www.dynatrace.com/platform/dashboards/" target="_blank">Dynatrace dashboard</a> that shows a summary of all predictions and 
   their accuracy.</li>
 </ul>
 <h2 id="4-grab-a-coffee">4. Grab a Coffee<a class="headerlink" href="#4-grab-a-coffee" title="Permanent link">#</a></h2>
@@ -659,7 +659,7 @@ predictive analysis. You can check its progress by navigating to the newly deplo
 notebook and running the DQL query in the "2. Predict Resource Usage" step. If the results indicate that Davis AI is
 ready, you can proceed to <a href="#5-generate-some-load">step 5</a>.</p>
 <p>Just make sure that your Codespace does not expire within that time by e.g. clicking into the window from time to time.
-Check out the <a href="https://docs.github.com/en/codespaces/setting-your-user-preferences/setting-your-timeout-period-for-github-codespaces">GitHub Codespace documentation</a>
+Check out the <a href="https://docs.github.com/en/codespaces/setting-your-user-preferences/setting-your-timeout-period-for-github-codespaces" target="_blank">GitHub Codespace documentation</a>
 to read more about timeout periods for Codespaces and how to configure them.</p>
 <h2 id="5-generate-some-load">5. Generate Some Load<a class="headerlink" href="#5-generate-some-load" title="Permanent link">#</a></h2>
 <blockquote>
