@@ -40,8 +40,8 @@ to deploy the workflows and notebook used in this demo. Permissions:
 - Fork [this repository](https://github.com/Dynatrace/obslab-predictive-kubernetes-scaling/tree/main){target="_blank"} to your GitHub account. This will allow you to make changes and submit pull requests
   later on.
 - Adjust the `predictive-kubernetes-scaling.observability-labs.dynatrace.com/managed-by-repo` annotations in 
-- [`apps/horizontal-scaling/deployment.yaml`](../apps/horizontal-scaling/deployment.yaml) and
-  [`apps/vertical-scaling/deployment.yaml`](../apps/vertical-scaling/deployment.yaml) to match your forked repository.
+- [`apps/horizontal-scaling/deployment.yaml`](https://github.com/Dynatrace/obslab-predictive-kubernetes-scaling/blob/main/apps/horizontal-scaling/deployment.yaml){target="_blank"} and
+  [`apps/vertical-scaling/deployment.yaml`](https://github.com/Dynatrace/obslab-predictive-kubernetes-scaling/blob/main/apps/vertical-scaling/deployment.yaml){target="_blank"} to match your forked repository.
 - Create a new Codespace
     - In your forked repository, click the green `Code` button and switch to the `Codespaces` tab.
     - Click `...` and select `New with options...`.
