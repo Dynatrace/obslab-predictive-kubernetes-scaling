@@ -7,4 +7,53 @@ nav:
   - '3. Cleanup': cleanup.md
 #  - '4. Resources': resources.md
   - "4. What's Next?": whats-next.md
-theme: material
+theme:
+  name: material
+  custom_dir: custom_theme
+  palette:
+
+  # Palette toggle for automatic mode
+  - media: "(prefers-color-scheme)"
+    toggle:
+      icon: material/brightness-auto
+      name: Switch to light mode
+
+  # Palette toggle for light mode
+  - media: "(prefers-color-scheme: light)"
+    scheme: default 
+    toggle:
+      icon: material/brightness-7
+      name: Switch to dark mode
+
+  # Palette toggle for dark mode
+  - media: "(prefers-color-scheme: dark)"
+    scheme: slate
+    toggle:
+      icon: material/brightness-4
+      name: Switch to system preference
+markdown_extensions:
+  - attr_list 
+  - toc:
+      permalink: '#'
+plugins:
+    - search
+    - markdownextradata
+extra:
+  dt:
+    rumagent:
+      snippet: <script type="text/javascript" src="https://js-cdn.dynatrace.com/jstag/145e12d594f/bf64904yne/8d355b8e439527e1_complete.js" crossorigin="anonymous"></script>
+  obslab: obslab-predictive-kubernetes-scaling
+  progressbar:
+    2. Getting Started:
+      - Create API Token
+      - Create OAuth Client
+      - Create Dynatrace platform token
+      - Allow outbound connections
+      - Fork repo
+      - Adjust annotations
+      - Create codespace
+      - Wait for DAVIS baseline
+      - Generate load
+      - Check 'Predict Kubernetes Resource Usage' workflow
+      - Check 'Commit Davis Prediction' workflow
+      - Review Pull Request
