@@ -26,3 +26,14 @@ ensure smooth integration into your specific environment:
   the [GitHub Codespaces documentation](https://docs.github.com/en/codespaces/overview){target="_blank"}.
 - **Davis CoPilot API Usage**: This demo utilizes Davis CoPilot API calls for its generative AI capabilities. These
   calls might cause costs in the future.
+
+## Compatibility
+
+| Deployment         | Tutorial Compatible |
+|--------------------|---------------------|
+| Dynatrace Managed  | ❌                 |
+| Dynatrace SaaS     | ✔️                 |
+
+<div class="grid cards" markdown>
+- [Click Here to Begin :octicons-arrow-right-24:](getting-started.md)
+</div>

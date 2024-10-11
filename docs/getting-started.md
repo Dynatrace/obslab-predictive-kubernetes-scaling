@@ -3,8 +3,11 @@
 ## Requirements
 
 - A **Grail enabled Dynatrace SaaS Tenant**
-  where [Davis CoPilot](https://www.dynatrace.com/platform/artificial-intelligence/){target="_blank"} is enabled.
+  where [Davis CoPilot](https://www.dynatrace.com/platform/artificial-intelligence/){target="_blank"} is enabled ([sign up here](https://dt-url.net/trial){target="_blank"}).
 - A **GitHub account** to interact with the demo repository.
+- The [GitHub for Workflows app](){target=_blank} installed (via Hub on your Dynatrace environment)
+    - Press `ctrl + k`. Search for `Hub`.
+    - In the hub, search for `Github for Workflows` and install the application
 
 ## 1. Prepare Your Environment
 
@@ -30,7 +33,7 @@ to deploy the workflows and notebook used in this demo. Permissions:
     - `oauth2:clients:manage`
     - `settings:objects:read`
     - `settings:objects:write`
-- A Dynatrace Platform token to trigger the Davis CoPilot from the demo workflow. Permissions:
+- A Dynatrace [Platform token](https://docs.dynatrace.com/docs/manage/identity-access-management/access-tokens-and-oauth-clients/platform-tokens){target=_blank} to trigger the Davis CoPilot from the demo workflow. Permissions:
     - `davis-copilot:conversations:execute`
 - [Allow an outbound connection from Dynatrace](https://developer.dynatrace.com/develop/functions/allow-outbound-connections/){target="_blank"}
   to `api.github.com` so that the demo workflow can communicate with GitHub.
@@ -43,11 +46,10 @@ to deploy the workflows and notebook used in this demo. Permissions:
 - [`apps/horizontal-scaling/deployment.yaml`](https://github.com/Dynatrace/obslab-predictive-kubernetes-scaling/blob/main/apps/horizontal-scaling/deployment.yaml){target="_blank"} and
   [`apps/vertical-scaling/deployment.yaml`](https://github.com/Dynatrace/obslab-predictive-kubernetes-scaling/blob/main/apps/vertical-scaling/deployment.yaml){target="_blank"} to match your forked repository.
 - Create a new Codespace
-    - In your forked repository, click the green `Code` button and switch to the `Codespaces` tab.
-    - Click `...` and select `New with options...`.
-      > ⚠️ Don't click the green `Create codespace` button in this step.
-    - Enter the credentials you generated in [step 1](#1-prepare-your-environment).
-    - Click `Create Codespace`.
+    - Go to [https://codespaces.new](https://codespaces.new){target=_blank}
+    - Set the `repository` to your forked repo
+    - Complete the variables requested in the form
+    - Click `Create Codespace`
 - Wait for the Setup to complete. The Codespace will run a `postCreate` command to initialize your environment. This may
   take a few minutes. You'll know it's ready when the `zsh` shell is shown again.
     - If you want to check the progress, you can press `Ctrl + Shift + P` and type `Creation Log` to see the setup logs
@@ -87,8 +89,9 @@ to read more about timeout periods for Codespaces and how to configure them.
 
 ## 5. Generate Some Load
 
-> ⚠ Before proceeding, ensure Davis AI has finished creating a baseline for your workloads
-> (see [step 4](#4-grab-a-coffee) for more information).
+!!! info
+    Before proceeding, ensure Davis AI has finished creating a baseline for your workloads
+    (see [step 4](#4-grab-a-coffee) for more information).
 
 Now, let's simulate a scenario where workload increases and triggers a resource prediction:
 
@@ -131,3 +134,7 @@ If any steps failed:
 - Consult the Notebook: The "Predictive Kubernetes Scaling" notebook can provide valuable insights into potential
   issues.
 - Raise an Issue: Feel free to raise an issue in this repository for assistance.
+
+<div class="grid cards" markdown>
+- [Click Here to Continue :octicons-arrow-right-24:](cleanup.md)
+</div>
