@@ -67,11 +67,11 @@ kubectl apply --filename kubernetes/dynakube.yaml
 ###############################
 
 kubectl --namespace dynatrace \
-  create secret generic "edge-connect-$CODESPACE_NAME-credentials" \
+  create secret generic "edge-connect-${CODESPACE_NAME:0:40}-credentials" \
   --from-literal=oauth-client-id="$DYNATRACE_OAUTH_CLIENT_ID" \
   --from-literal=oauth-client-secret="$DYNATRACE_OAUTH_CLIENT_SECRET"
 
-sed -i "s|CODESPACE_NAME|$CODESPACE_NAME|g" kubernetes/edge-connect.yaml
+sed -i "s|CODESPACE_NAME|${CODESPACE_NAME:0:40}|g" kubernetes/edge-connect.yaml
 sed -i "s|DYNATRACE_ENVIRONMENT_ID|$DYNATRACE_ENVIRONMENT_ID|g" kubernetes/edge-connect.yaml
 sed -i "s|DYNATRACE_APPS_URL|$DYNATRACE_APPS_URL|g" kubernetes/edge-connect.yaml
 sed -i "s|DYNATRACE_SSO_URL|$DYNATRACE_SSO_URL|g" kubernetes/edge-connect.yaml
