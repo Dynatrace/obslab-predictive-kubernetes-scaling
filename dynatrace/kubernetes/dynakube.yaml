@@ -1,4 +1,5 @@
-apiVersion: dynatrace.com/v1beta1
+---
+apiVersion: dynatrace.com/v1beta2
 kind: DynaKube
 metadata:
   name: predictive-kubernetes-scaling-demo
@@ -7,19 +8,23 @@ metadata:
     feature.dynatrace.com/k8s-app-enabled: "true"
 spec:
   apiUrl: https://DYNATRACE_LIVE_URL/api
+
+  metadataEnrichment:
+    enabled: true
   oneAgent:
-    cloudNativeFullStack:
-      image: ""
+    applicationMonitoring:
+      useCSIDriver: true
   activeGate:
     capabilities:
       - kubernetes-monitoring
       - routing
       - metrics-ingest
       - dynatrace-api
+
     resources:
       requests:
-        cpu: 250m
-        memory: 500Mi
+        cpu: 5m
+        memory: 51Mi
       limits:
-        cpu: 250m
-        memory: 500Mi
+        cpu: 1000m
+        memory: 1.5Gi
