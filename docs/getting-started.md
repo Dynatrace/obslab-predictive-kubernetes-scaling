@@ -2,6 +2,8 @@
 
 ## Requirements
 
+--8<-- "snippets/preview-functionality.md"
+
 - A **Grail enabled Dynatrace SaaS Tenant**
   where [Davis CoPilot](https://www.dynatrace.com/platform/artificial-intelligence/){target="_blank"} is enabled ([sign up here](https://dt-url.net/trial){target="_blank"}).
 - A **GitHub account** to interact with the demo repository.
