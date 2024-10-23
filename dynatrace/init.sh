@@ -48,7 +48,7 @@ export DYNATRACE_KUBERNETES_DATA_INGEST_TOKEN
 
 # Install & configure Dynatrace operator
 helm install dynatrace-operator oci://public.ecr.aws/dynatrace/dynatrace-operator \
-  --version 1.3.0-rc.0 \
+  --version 1.3.1 \
   --create-namespace --namespace dynatrace \
   --values ./kubernetes/operator.values.yaml \
   --atomic --wait
