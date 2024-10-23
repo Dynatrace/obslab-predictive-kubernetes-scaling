@@ -1,5 +1,6 @@
 # Dynatrace Observability Lab: Predictive Auto-Scaling for Kubernetes Workloads
 
+--8<-- "snippets/disclaimer.md"
 --8<-- "snippets/view-code.md"
 
 Struggling to keep up with the demands of dynamic Kubernetes environments? Manual scaling is not only time-consuming and
