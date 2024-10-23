@@ -40,6 +40,15 @@ to deploy the workflows and notebook used in this demo. Permissions:
 - [Allow an outbound connection from Dynatrace](https://developer.dynatrace.com/develop/functions/allow-outbound-connections/){target="_blank"}
   to `api.github.com` so that the demo workflow can communicate with GitHub.
 
+!!! info "Wait for GitHub to Index Your Fork"
+    The Dynatrace workflow relies on GitHub search functionality. Therefore it is important to wait until GitHub search has indexed your fork.
+
+    To test this, try searching your fork for `predictive-kubernetes-scaling.observability-labs.dynatrace.com`
+
+    If you get a warning: `⚠️ This repository's code is being indexed right now. Try again in a few minutes.` you should not proceed.
+
+    Wait until the search completes successfully, then proceed.
+
 ## 2. Create Your Development Environment
 
 - Fork [this repository](https://github.com/Dynatrace/obslab-predictive-kubernetes-scaling/tree/main){target="_blank"} to your GitHub account. This will allow you to make changes and submit pull requests
