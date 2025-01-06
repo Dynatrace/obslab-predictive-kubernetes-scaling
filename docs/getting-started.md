@@ -51,6 +51,8 @@ to deploy the workflows and notebook used in this demo. Permissions:
 
 ## 2. Create Your Development Environment
 
+--8<-- "snippets/codespace-details-warning-box.md"
+
 - Fork [this repository](https://github.com/Dynatrace/obslab-predictive-kubernetes-scaling/tree/main){target="_blank"} to your GitHub account. This will allow you to make changes and submit pull requests
   later on.
 - Adjust the `predictive-kubernetes-scaling.observability-labs.dynatrace.com/managed-by-repo` annotations in 
