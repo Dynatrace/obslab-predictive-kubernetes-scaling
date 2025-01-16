@@ -5,8 +5,8 @@ nav:
   - '1. About': index.md
   - '2. Getting Started': getting-started.md
   - '3. Cleanup': cleanup.md
-#  - '4. Resources': resources.md
-  - "4. What's Next?": whats-next.md
+  - '4. Resources': resources.md
+  - "5. What's Next?": whats-next.md
 theme:
   name: material
   features:
