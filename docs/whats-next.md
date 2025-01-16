@@ -14,4 +14,4 @@ to meet your specific needs. Here are some ideas to get you started:
 ## Share Your Feedback
 
 We value your input! If you encounter any problems, have suggestions, or just want to share your thoughts, please don't
-hesitate to raise an issue in this repository.
+hesitate to [raise an issue in this repository](https://github.com/Dynatrace/obslab-predictive-kubernetes-scaling/issues/new){target=_blank}.
