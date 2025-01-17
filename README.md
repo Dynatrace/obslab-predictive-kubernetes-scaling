@@ -9,4 +9,4 @@ Watch the full companion video on YouTube:
 
 [![Watch it on YouTube](https://img.youtube.com/vi/EMw-MUZi-xk/0.jpg)](https://www.youtube.com/watch?v=EMw-MUZi-xk)
 
-Read more and start your hands-on experience [here](https://dynatrace.github.io/obslab-predictive-kubernetes-scaling).
+## [Start the hands-on here >>]([https://dynatrace.github.io/obslab-release-validation/](https://dynatrace.github.io/obslab-predictive-kubernetes-scaling))
