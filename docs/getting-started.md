@@ -3,6 +3,7 @@
 ## Requirements
 
 --8<-- "snippets/preview-functionality.md"
+--8<-- "snippets/bizevent-getting-started.js"
 
 - A **Grail enabled Dynatrace SaaS Tenant**
   where [Davis CoPilot](https://www.dynatrace.com/platform/artificial-intelligence/){target="_blank"} is enabled ([sign up here](https://dt-url.net/trial){target="_blank"}).

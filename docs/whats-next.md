@@ -1,5 +1,7 @@
 # What's Next?
 
+--8<-- "snippets/bizevent-whats-next.js"
+
 This demo is a great starting point, but it's really just the beginning. You can adapt and expand this proof of concept
 to meet your specific needs. Here are some ideas to get you started:
 

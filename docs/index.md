@@ -2,6 +2,7 @@
 
 --8<-- "snippets/disclaimer.md"
 --8<-- "snippets/view-code.md"
+--8<-- "snippets/bizevent-homepage.js"
 
 Struggling to keep up with the demands of dynamic Kubernetes environments? Manual scaling is not only time-consuming and
 reactive but also prone to errors. In this demo we harness the power of Dynatrace Automations and Davis AI to predict

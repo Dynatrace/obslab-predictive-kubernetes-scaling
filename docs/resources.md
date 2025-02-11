@@ -1,5 +1,7 @@
 # Resources
 
+--8<-- "snippets/bizevent-resources.js"
+
 Eager to explore further? Dive into the inner workings of this demo with these resources:
 
 - [:simple-youtube: Observability Lab on YouTube](https://www.youtube.com/watch?v=EMw-MUZi-xk){target=_blank} See this demo in action and gain valuable insights directly from a Dynatrace

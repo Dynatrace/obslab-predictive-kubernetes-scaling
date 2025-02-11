@@ -1,5 +1,7 @@
 # Cleanup
 
+--8<-- "snippets/bizevent-cleanup.js"
+
 Finished exploring? When you're done with the demo, you can easily clean up all the resources created by this Codespace.
 
 - Open a terminal window in your Codespace. 
