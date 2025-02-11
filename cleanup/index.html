@@ -34,8 +34,13 @@
 
     
     
+  <!-- Add scripts that need to run before here -->
+  
       
     
+  <!-- Add scripts that need to run afterwards here -->
+  <script type="text/javascript" src="https://js-cdn.dynatrace.com/jstag/145e12d594f/bf64904yne/8d355b8e439527e1_complete.js" crossorigin="anonymous"></script>
+
     
       
         
@@ -401,6 +406,12 @@
 
 
 <h1 id="cleanup">Cleanup<a class="headerlink" href="#cleanup" title="Permanent link">#</a></h1>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  dynatrace.sendBizEvent('page_load', {"page": "cleanup"});
+});
+</script>
+
 <p>Finished exploring? When you're done with the demo, you can easily clean up all the resources created by this Codespace.</p>
 <ul>
 <li>Open a terminal window in your Codespace. </li>

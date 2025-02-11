@@ -34,8 +34,13 @@
 
     
     
+  <!-- Add scripts that need to run before here -->
+  
       
     
+  <!-- Add scripts that need to run afterwards here -->
+  <script type="text/javascript" src="https://js-cdn.dynatrace.com/jstag/145e12d594f/bf64904yne/8d355b8e439527e1_complete.js" crossorigin="anonymous"></script>
+
     
       
         
@@ -589,6 +594,12 @@
 <p>This demo uses functionality that is still in Preview.</p>
 <p>After creating a Dynatrace environment, please <a href="https://docs.dynatrace.com/docs/platform-modules/automations/workflows/actions/kubernetes-automation" target="_blank">sign up for this preview functionality</a>.</p>
 </div>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  dynatrace.sendBizEvent('page_load', {"page": "getting-started"});
+});
+</script>
+
 <ul>
 <li>A <strong>Grail enabled Dynatrace SaaS Tenant</strong>
   where <a href="https://www.dynatrace.com/platform/artificial-intelligence/" target="_blank">Davis CoPilot</a> is enabled (<a href="https://dt-url.net/trial" target="_blank">sign up here</a>).</li>

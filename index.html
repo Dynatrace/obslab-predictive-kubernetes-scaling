@@ -32,8 +32,13 @@
 
     
     
+  <!-- Add scripts that need to run before here -->
+  
       
     
+  <!-- Add scripts that need to run afterwards here -->
+  <script type="text/javascript" src="https://js-cdn.dynatrace.com/jstag/145e12d594f/bf64904yne/8d355b8e439527e1_complete.js" crossorigin="anonymous"></script>
+
     
       
         
@@ -482,6 +487,12 @@
 <p class="admonition-title">View the Code</p>
 <p>The code for this repository is hosted on GitHub. Click the "View Code on GitHub" link above.</p>
 </div>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  dynatrace.sendBizEvent('page_load', {"page": "homepage"});
+});
+</script>
+
 <p>Struggling to keep up with the demands of dynamic Kubernetes environments? Manual scaling is not only time-consuming and
 reactive but also prone to errors. In this demo we harness the power of Dynatrace Automations and Davis AI to predict
 resource bottlenecks and automatically open pull requests to scale applications. This proactive approach minimizes
