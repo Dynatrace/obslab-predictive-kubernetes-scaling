@@ -28,6 +28,9 @@ export TF_VAR_dynatrace_live_url="https://$DYNATRACE_LIVE_URL"
 export TF_VAR_dynatrace_environment_id=$DYNATRACE_ENVIRONMENT_ID
 export TF_VAR_codespace_name=$CODESPACE_NAME
 
+export CLUSTER_NAME="predictive-kubernetes-scaling-demo"
+
+
 export DYNATRACE_AUTOMATION_CLIENT_ID=$DYNATRACE_OAUTH_CLIENT_ID
 export DYNATRACE_AUTOMATION_CLIENT_SECRET=$DYNATRACE_OAUTH_CLIENT_SECRET
 
@@ -46,9 +49,21 @@ export DYNATRACE_KUBERNETES_OPERATOR_TOKEN
 DYNATRACE_KUBERNETES_DATA_INGEST_TOKEN="$(terraform output kubernetes_data_ingest_token | tr -d '"')"
 export DYNATRACE_KUBERNETES_DATA_INGEST_TOKEN
 
+#### Deploy the cert-manager
+echo "Deploying Cert Manager ( for OpenTelemetry Operator)"
+kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.10.0/cert-manager.yaml
+# Wait for pod webhook started
+kubectl wait pod -l app.kubernetes.io/component=webhook -n cert-manager --for=condition=Ready --timeout=2m
+# Deploy the opentelemetry operator
+sleep 10
+echo "Deploying the OpenTelemetry Operator"
+kubectl apply -f https://github.com/open-telemetry/opentelemetry-operator/releases/latest/download/opentelemetry-operator.yaml
+
+
+
 # Install & configure Dynatrace operator
 helm install dynatrace-operator oci://public.ecr.aws/dynatrace/dynatrace-operator \
-  --version 1.3.1 \
+  --version 1.4.1 \
   --create-namespace --namespace dynatrace \
   --values ./kubernetes/operator.values.yaml \
   --atomic --wait
@@ -57,6 +72,13 @@ kubectl --namespace dynatrace \
   create secret generic predictive-kubernetes-scaling-demo \
   --from-literal=apiToken="$DYNATRACE_KUBERNETES_OPERATOR_TOKEN" \
   --from-literal=dataIngestToken="$DYNATRACE_KUBERNETES_DATA_INGEST_TOKEN"
+
+kubectl create secret generic dynatrace \
+   --from-literal=dynatrace_oltp_url="$DYNATRACE_LIVE_URL" \
+   --from-literal=dt_api_token="$DYNATRACE_KUBERNETES_DATA_INGEST_TOKEN" \
+   --from-literal=clustername="$CLUSTER_NAME"  \
+   --from-literal=clusterid=$CLUSTERID
+
 
 sed -i "s|DYNATRACE_LIVE_URL|$DYNATRACE_LIVE_URL|g" kubernetes/dynakube.yaml
 

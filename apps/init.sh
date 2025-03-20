@@ -4,7 +4,9 @@ set -e
 
 kubectl create namespace horizontal-scaling
 kubectl create namespace vertical-scaling
-
+kubect create ns otel-demo
+kubectl label namespace  default oneagent=false
+kubectl label otel-demo  oneagent=false
 ######################
 ### metrics-server ###
 ######################
@@ -20,8 +22,12 @@ helm install metrics-server metrics-server/metrics-server \
 ############
 ### Apps ###
 ############
+kubectl apply -f  apps/opentelemetry/rbac.yaml
+kubectl apply -f apps/openTelemetry-manifest_statefulset.yaml
 
 kubectl apply --filename apps/vertical-scaling/deployment.yaml
 
 kubectl apply --filename apps/horizontal-scaling/deployment.yaml
 kubectl apply --filename apps/horizontal-scaling/hpa.yaml
+
+kubectl apply -k apps/otel-demo -n otel-demo

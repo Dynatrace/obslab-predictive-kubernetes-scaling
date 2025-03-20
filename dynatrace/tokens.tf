@@ -31,7 +31,9 @@ resource "dynatrace_api_token" "kubernetes_data_ingest" {
   name    = "Kubernetes Data Ingest [${var.demo_name}]"
   enabled = true
   scopes = [
-    "metrics.ingest"
+    "metrics.ingest",
+    "openTelemetryTrace.ingest",
+    "log.ingest"
   ]
 }
 
