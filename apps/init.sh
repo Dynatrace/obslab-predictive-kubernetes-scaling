@@ -6,7 +6,7 @@ kubectl create namespace horizontal-scaling
 kubectl create namespace vertical-scaling
 kubectl create ns otel-demo
 kubectl label namespace  default oneagent=false
-kubectl label otel-demo  oneagent=false
+kubectl label namespace otel-demo  oneagent=false
 ######################
 ### metrics-server ###
 ######################
