@@ -34,6 +34,10 @@ export CLUSTER_NAME="predictive-kubernetes-scaling-demo"
 export DYNATRACE_AUTOMATION_CLIENT_ID=$DYNATRACE_OAUTH_CLIENT_ID
 export DYNATRACE_AUTOMATION_CLIENT_SECRET=$DYNATRACE_OAUTH_CLIENT_SECRET
 
+export DYNATRACE_DEBUG=true
+export DYNATRACE_LOG_HTTP=terraform-provider-dynatrace.http.log
+export DYYNATRACE_HTTP_RESPONSE=true
+
 terraform init
 
 #############################
