@@ -4,7 +4,7 @@ set -e
 
 kubectl create namespace horizontal-scaling
 kubectl create namespace vertical-scaling
-kubect create ns otel-demo
+kubectl create ns otel-demo
 kubectl label namespace  default oneagent=false
 kubectl label otel-demo  oneagent=false
 ######################
