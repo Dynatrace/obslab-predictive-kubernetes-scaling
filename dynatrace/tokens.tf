@@ -33,7 +33,7 @@ resource "dynatrace_api_token" "kubernetes_data_ingest" {
   scopes = [
     "metrics.ingest",
     "openTelemetryTrace.ingest",
-    "log.ingest"
+    "logs.ingest"
   ]
 }
 
