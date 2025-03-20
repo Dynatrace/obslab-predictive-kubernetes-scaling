@@ -22,8 +22,8 @@ helm install metrics-server metrics-server/metrics-server \
 ############
 ### Apps ###
 ############
-kubectl apply -f  apps/opentelemetry/rbac.yaml
-kubectl apply -f apps/openTelemetry-manifest_statefulset.yaml
+kubectl apply -f apps/opentelemetry/rbac.yaml
+kubectl apply -f apps/opentelemetry/openTelemetry-manifest_statefulset.yaml
 
 kubectl apply --filename apps/vertical-scaling/deployment.yaml
 
