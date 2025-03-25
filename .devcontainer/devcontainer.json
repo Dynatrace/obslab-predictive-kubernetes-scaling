@@ -35,7 +35,7 @@
   "hostRequirements": {
     "cpus": 2
   },
-  "postCreateCommand": ".devcontainer/post-create.sh",
+  "postCreateCommand": ".devcontainer/post-create.sh --deploymentmode git",
   "secrets": {
     "DYNATRACE_ENVIRONMENT_ID": {
       description: "The id of your Dynatrace tenant. E.g. `abc12345` from `https://abc12345.live.apps.dynatrace.com`"
