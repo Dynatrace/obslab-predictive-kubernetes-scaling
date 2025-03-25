@@ -589,7 +589,7 @@ metadata:
     predictive-kubernetes-scaling.observability-labs.dynatrace.com/enabled: 'true'
     predictive-kubernetes-scaling.observability-labs.dynatrace.com/type: 'speed'
     predictive-kubernetes-scaling.observability-labs.dynatrace.com/managed-by-repo: 'henrikrexed/obslab-predictive-kubernetes-scaling'
-    predictive-kubernetes-scaling.observability-labs.dynatrace.com/uuid: '29495ece-204c-49ca-84e3-1066810cffeb'
+    predictive-kubernetes-scaling.observability-labs.dynatrace.com/uuid: '48075e3a-e621-4cd1-90c4-ea3be80f78a4'
     predictive-kubernetes-scaling.observability-labs.dynatrace.com/managed-by-hpa: 'accounting'
 
 spec:
@@ -636,6 +636,7 @@ spec:
           resources:
             limits:
               memory: 120Mi
+              cpu: 400m
           volumeMounts:
       initContainers:
         - command:
@@ -665,7 +666,7 @@ metadata:
     predictive-kubernetes-scaling.observability-labs.dynatrace.com/enabled: 'true'
     predictive-kubernetes-scaling.observability-labs.dynatrace.com/type: 'speed'
     predictive-kubernetes-scaling.observability-labs.dynatrace.com/managed-by-repo: 'henrikrexed/obslab-predictive-kubernetes-scaling'
-    predictive-kubernetes-scaling.observability-labs.dynatrace.com/uuid: '29495ece-204c-49ca-84e3-1066810cffeb'
+    predictive-kubernetes-scaling.observability-labs.dynatrace.com/uuid: 'e54f1851-9fa3-45e4-b091-c44229e603fa'
     predictive-kubernetes-scaling.observability-labs.dynatrace.com/managed-by-hpa: 'adservice'
 
 spec:
@@ -722,6 +723,7 @@ spec:
           resources:
             limits:
               memory: 300Mi
+              cpu: 400m
           volumeMounts:
       volumes:
 ---
@@ -743,7 +745,7 @@ metadata:
     predictive-kubernetes-scaling.observability-labs.dynatrace.com/enabled: 'true'
     predictive-kubernetes-scaling.observability-labs.dynatrace.com/type: 'speed'
     predictive-kubernetes-scaling.observability-labs.dynatrace.com/managed-by-repo: 'henrikrexed/obslab-predictive-kubernetes-scaling'
-    predictive-kubernetes-scaling.observability-labs.dynatrace.com/uuid: '29495ece-204c-49ca-84e3-1066810cffeb'
+    predictive-kubernetes-scaling.observability-labs.dynatrace.com/uuid: '8f76befa-7552-4ea4-8774-157446ae04df'
     predictive-kubernetes-scaling.observability-labs.dynatrace.com/managed-by-hpa: 'cartservice'
 
 spec:
@@ -802,6 +804,7 @@ spec:
           resources:
             limits:
               memory: 160Mi
+              cpu: 100m
           volumeMounts:
       initContainers:
         - command:
@@ -832,7 +835,7 @@ metadata:
     predictive-kubernetes-scaling.observability-labs.dynatrace.com/enabled: 'true'
     predictive-kubernetes-scaling.observability-labs.dynatrace.com/type: 'speed'
     predictive-kubernetes-scaling.observability-labs.dynatrace.com/managed-by-repo: 'henrikrexed/obslab-predictive-kubernetes-scaling'
-    predictive-kubernetes-scaling.observability-labs.dynatrace.com/uuid: '29495ece-204c-49ca-84e3-1066810cffeb'
+    predictive-kubernetes-scaling.observability-labs.dynatrace.com/uuid: '494f191d-fdad-4cb7-b81a-8f3075890aa0'
     predictive-kubernetes-scaling.observability-labs.dynatrace.com/managed-by-hpa: 'checkoutservice'
 
 spec:
@@ -902,6 +905,7 @@ spec:
           resources:
             limits:
               memory: 20Mi
+              cpu: 100m
           volumeMounts:
       initContainers:
         - command:
@@ -931,7 +935,7 @@ metadata:
     predictive-kubernetes-scaling.observability-labs.dynatrace.com/enabled: 'true'
     predictive-kubernetes-scaling.observability-labs.dynatrace.com/type: 'speed'
     predictive-kubernetes-scaling.observability-labs.dynatrace.com/managed-by-repo: 'henrikrexed/obslab-predictive-kubernetes-scaling'
-    predictive-kubernetes-scaling.observability-labs.dynatrace.com/uuid: '29495ece-204c-49ca-84e3-1066810cffeb'
+    predictive-kubernetes-scaling.observability-labs.dynatrace.com/uuid: '99eda3ff-8520-43e8-a5e2-4c7bcf182ff8'
     predictive-kubernetes-scaling.observability-labs.dynatrace.com/managed-by-hpa: 'currency'
 
 spec:
@@ -984,6 +988,7 @@ spec:
           resources:
             limits:
               memory: 20Mi
+              cpu: 200m
           volumeMounts:
       volumes:
 ---
@@ -1005,7 +1010,7 @@ metadata:
     predictive-kubernetes-scaling.observability-labs.dynatrace.com/enabled: 'true'
     predictive-kubernetes-scaling.observability-labs.dynatrace.com/type: 'speed'
     predictive-kubernetes-scaling.observability-labs.dynatrace.com/managed-by-repo: 'henrikrexed/obslab-predictive-kubernetes-scaling'
-    predictive-kubernetes-scaling.observability-labs.dynatrace.com/uuid: '29495ece-204c-49ca-84e3-1066810cffeb'
+    predictive-kubernetes-scaling.observability-labs.dynatrace.com/uuid: '1d3a1d2e-5f51-4bff-877f-ff04d59c6777'
     predictive-kubernetes-scaling.observability-labs.dynatrace.com/managed-by-hpa: 'email'
 
 spec:
@@ -1059,6 +1064,7 @@ spec:
           resources:
             limits:
               memory: 100Mi
+              cpu: 200m
           volumeMounts:
       volumes:
 ---
@@ -1078,11 +1084,6 @@ metadata:
 
   annotations:
     dt.owner: 'predictive-kubernetes-scaling'
-    predictive-kubernetes-scaling.observability-labs.dynatrace.com/enabled: 'false'
-    predictive-kubernetes-scaling.observability-labs.dynatrace.com/type: 'speed'
-    predictive-kubernetes-scaling.observability-labs.dynatrace.com/managed-by-repo: 'henrikrexed/obslab-predictive-kubernetes-scaling'
-    predictive-kubernetes-scaling.observability-labs.dynatrace.com/uuid: '29495ece-204c-49ca-84e3-1066810cffeb'
-    predictive-kubernetes-scaling.observability-labs.dynatrace.com/managed-by-hpa: 'email'
 
 spec:
   replicas: 1
@@ -1205,10 +1206,6 @@ metadata:
   annotations:
     dt.owner: 'predictive-kubernetes-scaling'
     predictive-kubernetes-scaling.observability-labs.dynatrace.com/enabled: 'false'
-    predictive-kubernetes-scaling.observability-labs.dynatrace.com/type: 'speed'
-    predictive-kubernetes-scaling.observability-labs.dynatrace.com/managed-by-repo: 'henrikrexed/obslab-predictive-kubernetes-scaling'
-    predictive-kubernetes-scaling.observability-labs.dynatrace.com/uuid: '29495ece-204c-49ca-84e3-1066810cffeb'
-    predictive-kubernetes-scaling.observability-labs.dynatrace.com/managed-by-hpa: 'frauddetectionservice'
 
 spec:
   replicas: 1
@@ -1287,7 +1284,7 @@ metadata:
     predictive-kubernetes-scaling.observability-labs.dynatrace.com/enabled: 'true'
     predictive-kubernetes-scaling.observability-labs.dynatrace.com/type: 'speed'
     predictive-kubernetes-scaling.observability-labs.dynatrace.com/managed-by-repo: 'henrikrexed/obslab-predictive-kubernetes-scaling'
-    predictive-kubernetes-scaling.observability-labs.dynatrace.com/uuid: '29495ece-204c-49ca-84e3-1066810cffeb'
+    predictive-kubernetes-scaling.observability-labs.dynatrace.com/uuid: 'f1aa41d1-e670-4518-a533-99f339c8b49d'
     predictive-kubernetes-scaling.observability-labs.dynatrace.com/managed-by-hpa: 'frontend'
 
 spec:
@@ -1364,6 +1361,7 @@ spec:
           resources:
             limits:
               memory: 250Mi
+              cpu: 400m
           securityContext:
             runAsGroup: 1001
             runAsNonRoot: true
@@ -1387,9 +1385,6 @@ metadata:
   annotations:
     dt.owner: 'predictive-kubernetes-scaling'
     predictive-kubernetes-scaling.observability-labs.dynatrace.com/enabled: 'false'
-    predictive-kubernetes-scaling.observability-labs.dynatrace.com/type: 'speed'
-    predictive-kubernetes-scaling.observability-labs.dynatrace.com/managed-by-repo: 'henrikrexed/obslab-predictive-kubernetes-scaling'
-    predictive-kubernetes-scaling.observability-labs.dynatrace.com/uuid: '29495ece-204c-49ca-84e3-1066810cffeb'
 
 spec:
   replicas: 1
@@ -1498,9 +1493,6 @@ metadata:
   annotations:
     dt.owner: 'predictive-kubernetes-scaling'
     predictive-kubernetes-scaling.observability-labs.dynatrace.com/enabled: 'false'
-    predictive-kubernetes-scaling.observability-labs.dynatrace.com/type: 'speed'
-    predictive-kubernetes-scaling.observability-labs.dynatrace.com/managed-by-repo: 'henrikrexed/obslab-predictive-kubernetes-scaling'
-    predictive-kubernetes-scaling.observability-labs.dynatrace.com/uuid: '29495ece-204c-49ca-84e3-1066810cffeb'
 
 spec:
   replicas: 1
@@ -1571,9 +1563,6 @@ metadata:
   annotations:
     dt.owner: 'predictive-kubernetes-scaling'
     predictive-kubernetes-scaling.observability-labs.dynatrace.com/enabled: 'false'
-    predictive-kubernetes-scaling.observability-labs.dynatrace.com/type: 'speed'
-    predictive-kubernetes-scaling.observability-labs.dynatrace.com/managed-by-repo: 'henrikrexed/obslab-predictive-kubernetes-scaling'
-    predictive-kubernetes-scaling.observability-labs.dynatrace.com/uuid: '29495ece-204c-49ca-84e3-1066810cffeb'
 
 spec:
   replicas: 1
@@ -1650,9 +1639,6 @@ metadata:
   annotations:
     dt.owner: 'predictive-kubernetes-scaling'
     predictive-kubernetes-scaling.observability-labs.dynatrace.com/enabled: 'false'
-    predictive-kubernetes-scaling.observability-labs.dynatrace.com/type: 'speed'
-    predictive-kubernetes-scaling.observability-labs.dynatrace.com/managed-by-repo: 'henrikrexed/obslab-predictive-kubernetes-scaling'
-    predictive-kubernetes-scaling.observability-labs.dynatrace.com/uuid: '29495ece-204c-49ca-84e3-1066810cffeb'
 
 spec:
   replicas: 1
@@ -1740,7 +1726,7 @@ metadata:
     predictive-kubernetes-scaling.observability-labs.dynatrace.com/enabled: 'true'
     predictive-kubernetes-scaling.observability-labs.dynatrace.com/type: 'speed'
     predictive-kubernetes-scaling.observability-labs.dynatrace.com/managed-by-repo: 'henrikrexed/obslab-predictive-kubernetes-scaling'
-    predictive-kubernetes-scaling.observability-labs.dynatrace.com/uuid: '29495ece-204c-49ca-84e3-1066810cffeb'
+    predictive-kubernetes-scaling.observability-labs.dynatrace.com/uuid: '0d97e13d-acd2-4d73-b2ba-35a850f22ca0'
     predictive-kubernetes-scaling.observability-labs.dynatrace.com/managed-by-hpa: 'paymentservice'
 
 spec:
@@ -1795,6 +1781,7 @@ spec:
           resources:
             limits:
               memory: 120Mi
+              cpu: 200m
           securityContext:
             runAsGroup: 1000
             runAsNonRoot: true
@@ -1820,7 +1807,7 @@ metadata:
     predictive-kubernetes-scaling.observability-labs.dynatrace.com/enabled: 'true'
     predictive-kubernetes-scaling.observability-labs.dynatrace.com/type: 'speed'
     predictive-kubernetes-scaling.observability-labs.dynatrace.com/managed-by-repo: 'henrikrexed/obslab-predictive-kubernetes-scaling'
-    predictive-kubernetes-scaling.observability-labs.dynatrace.com/uuid: '29495ece-204c-49ca-84e3-1066810cffeb'
+    predictive-kubernetes-scaling.observability-labs.dynatrace.com/uuid: 'a0890fc6-0934-4922-8e67-05d18003f611'
     predictive-kubernetes-scaling.observability-labs.dynatrace.com/managed-by-hpa: 'productcatalog'
 
 spec:
@@ -1877,6 +1864,7 @@ spec:
           resources:
             limits:
               memory: 20Mi
+              cpu: 400m
           volumeMounts:
       volumes:
 ---
@@ -1898,7 +1886,7 @@ metadata:
     predictive-kubernetes-scaling.observability-labs.dynatrace.com/enabled: 'true'
     predictive-kubernetes-scaling.observability-labs.dynatrace.com/type: 'speed'
     predictive-kubernetes-scaling.observability-labs.dynatrace.com/managed-by-repo: 'henrikrexed/obslab-predictive-kubernetes-scaling'
-    predictive-kubernetes-scaling.observability-labs.dynatrace.com/uuid: '29495ece-204c-49ca-84e3-1066810cffeb'
+    predictive-kubernetes-scaling.observability-labs.dynatrace.com/uuid: 'c2ef9582-7367-4167-872d-c2e404a87766'
     predictive-kubernetes-scaling.observability-labs.dynatrace.com/managed-by-hpa: 'quote'
 
 spec:
@@ -1953,6 +1941,7 @@ spec:
           resources:
             limits:
               memory: 40Mi
+              cpu: 100m
           securityContext:
             runAsGroup: 33
             runAsNonRoot: true
@@ -1978,7 +1967,7 @@ metadata:
     predictive-kubernetes-scaling.observability-labs.dynatrace.com/enabled: 'true'
     predictive-kubernetes-scaling.observability-labs.dynatrace.com/type: 'speed'
     predictive-kubernetes-scaling.observability-labs.dynatrace.com/managed-by-repo: 'henrikrexed/obslab-predictive-kubernetes-scaling'
-    predictive-kubernetes-scaling.observability-labs.dynatrace.com/uuid: '29495ece-204c-49ca-84e3-1066810cffeb'
+    predictive-kubernetes-scaling.observability-labs.dynatrace.com/uuid: 'f6abd27d-c413-4bbd-9b9c-c1ee9393c21f'
     predictive-kubernetes-scaling.observability-labs.dynatrace.com/managed-by-hpa: 'recommendation'
 
 spec:
@@ -2039,6 +2028,7 @@ spec:
           resources:
             limits:
               memory: 500Mi
+              cpu: 400m
           volumeMounts:
       volumes:
 ---
@@ -2061,7 +2051,7 @@ metadata:
     predictive-kubernetes-scaling.observability-labs.dynatrace.com/enabled: 'true'
     predictive-kubernetes-scaling.observability-labs.dynatrace.com/type: 'speed'
     predictive-kubernetes-scaling.observability-labs.dynatrace.com/managed-by-repo: 'henrikrexed/obslab-predictive-kubernetes-scaling'
-    predictive-kubernetes-scaling.observability-labs.dynatrace.com/uuid: '29495ece-204c-49ca-84e3-1066810cffeb'
+    predictive-kubernetes-scaling.observability-labs.dynatrace.com/uuid: '624bfc02-72ea-4cd4-a5f4-ba41971a2561'
     predictive-kubernetes-scaling.observability-labs.dynatrace.com/managed-by-hpa: 'shipping'
 
 spec:
@@ -2114,6 +2104,7 @@ spec:
           resources:
             limits:
               memory: 20Mi
+              cpu: 100m
           volumeMounts:
       volumes:
 ---
@@ -2132,10 +2123,6 @@ metadata:
     app.kubernetes.io/part-of: opentelemetry-demo
   annotations:
     dt.owner: 'predictive-kubernetes-scaling'
-    predictive-kubernetes-scaling.observability-labs.dynatrace.com/enabled: 'false'
-    predictive-kubernetes-scaling.observability-labs.dynatrace.com/type: 'speed'
-    predictive-kubernetes-scaling.observability-labs.dynatrace.com/managed-by-repo: 'henrikrexed/obslab-predictive-kubernetes-scaling'
-    predictive-kubernetes-scaling.observability-labs.dynatrace.com/uuid: '29495ece-204c-49ca-84e3-1066810cffeb'
 
 spec:
   replicas: 1

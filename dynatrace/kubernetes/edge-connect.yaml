@@ -26,18 +26,18 @@ subjects:
     name: edge-connect-hpa-reader
     namespace: dynatrace
 ---
-apiVersion: dynatrace.com/v1alpha1
+apiVersion: dynatrace.com/v1alpha2
 kind: EdgeConnect
 metadata:
-  name: CODESPACE_NAME
+  name: isitobservable-predectivescaling
   namespace: dynatrace
 spec:
-  apiServer: DYNATRACE_APPS_URL
+  apiServer: ktp91462.apps.dynatrace.com
   serviceAccountName: edge-connect-hpa-reader
   oauth:
     provisioner: true
-    clientSecret: edge-connect-CODESPACE_NAME-credentials
-    endpoint: https://DYNATRACE_SSO_URL
-    resource: "urn:dtenvironment:DYNATRACE_ENVIRONMENT_ID"
+    clientSecret: edge-connect-isitobservable-predectivescaling-credentials
+    endpoint: https://sso.dynatrace.com/sso/oauth2/token
+    resource: "urn:dtenvironment:ktp91462"
   kubernetesAutomation:
     enabled: true

@@ -4,12 +4,12 @@ metadata:
   name: recommendation
   namespace: otel-demo
   annotations:
-    predictive-kubernetes-scaling.observability-labs.dynatrace.com/uuid: 'c4e9324f-312f-4a1c-9d32-c8288d73626b'
+    predictive-kubernetes-scaling.observability-labs.dynatrace.com/uuid: 'a94b3775-fc2c-4938-915c-138ec2e7a34a'
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: opentelemetry-demo-quoteservice
+    name: opentelemetry-demo-recommendationservice
   minReplicas: 1
   maxReplicas: 2
   metrics:
@@ -18,4 +18,4 @@ spec:
         name: cpu
         target:
           type: Utilization
-          averageUtilization: 50
+          averageUtilization: 90

@@ -149,7 +149,7 @@ spec:
 
 
       otlphttp:
-        endpoint: ${DT_ENDPOINT}/api/v2/otlp
+        endpoint: https://${DT_ENDPOINT}/api/v2/otlp
         headers:
           Authorization: "Api-Token ${DT_API_TOKEN}"
       debug:

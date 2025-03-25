@@ -4,7 +4,7 @@ metadata:
   name: currency
   namespace: otel-demo
   annotations:
-    predictive-kubernetes-scaling.observability-labs.dynatrace.com/uuid: 'c4e9324f-312f-4a1c-9d32-c8288d73626b'
+    predictive-kubernetes-scaling.observability-labs.dynatrace.com/uuid: '99eda3ff-8520-43e8-a5e2-4c7bcf182ff8'
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
@@ -18,4 +18,4 @@ spec:
         name: cpu
         target:
           type: Utilization
-          averageUtilization: 50
+          averageUtilization: 90
