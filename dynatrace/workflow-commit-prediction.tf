@@ -20,47 +20,114 @@ resource "dynatrace_automation_workflow" "commit_prediction" {
       input = jsonencode({
         script = chomp(
           <<-EOT
+
           import {execution} from '@dynatrace-sdk/automation-utils';
-          import {credentialVaultClient} from "@dynatrace-sdk/client-classic-environment-v2";
 
-          export default async function ({execution_id}) {
-            const ex = await execution(execution_id);
-            const event = ex.params.event;
+               import {credentialVaultClient} from
+               "@dynatrace-sdk/client-classic-environment-v2";
 
-            const apiToken = await credentialVaultClient.getCredentialsDetails({
-              id: "${dynatrace_credentials.github_pat.id}",
-            }).then((credentials) => credentials.token);
 
-            // Search for file
-            const url = 'https://api.github.com/search/code?q=' +
-              `"${var.annotation_prefix}/uuid:%20'$${event['kubernetes.predictivescaling.target.uuid']}'"` +
-              `+repo:$${event['kubernetes.predictivescaling.target.repository']}` +
-              `+language:YAML`
+               export default async function ({execution_id}) {
+                 const ex = await execution(execution_id);
+                 const event = ex.params.event;
 
-            const response = await fetch(url, {
-              method: 'GET',
-              headers: {
-                'Authorization': `Bearer $${apiToken}`
-              }
-            }).then(response => response.json());
+                 const apiToken = await credentialVaultClient.getCredentialsDetails({
+                   id: "${dynatrace_credentials.github_pat.id}",
+                 }).then((credentials) => credentials.token);
 
-            const searchResult = response.items[0];
+                 // Search for file
+                 const url = 'https://api.github.com/search/code?q=' +
+                   `"${var.annotation_prefix}/uuid:%20'$&{event['kubernetes.predictivescaling.target.uuid']}'"` +
+                   `+repo:$&{event['kubernetes.predictivescaling.target.repository']}` +
+                   `+language:YAML`
+               /*
+                 const response = await fetch(url, {
+                   method: 'GET',
+                   headers: {
+                     'Authorization': `Bearer $${apiToken}`
+                   }
+                 }).then(response => response.json());
 
-            // Get default branch
-            const repository = await fetch(searchResult.repository.url, {
-              method: 'GET',
-              headers: {
-                'Authorization': `Bearer $${apiToken}`
-              }
-            }).then(response => response.json());
+                const searchResult = response.items[0];
 
-            return {
-              owner: searchResult.repository.owner.login,
-              repository: searchResult.repository.name,
-              filePath: searchResult.path,
-              defaultBranch: repository.default_branch
-            }
-          }
+
+                 // Get default branch
+                 const repository = await fetch(searchResult.repository.url, {
+                   method: 'GET',
+                   headers: {
+                     'Authorization': `Bearer $${apiToken}`
+                   }
+                 }).then(response => response.json());
+               */
+                 const filepath= getFilePath(event['kubernetes.predictivescaling.target.uuid'])
+                 let split= event['kubernetes.predictivescaling.target.repository'].split("/")
+                 const repo = split[1];
+                 const owner = split[0];
+                 const branch= "main"
+
+                 return {
+                   owner: owner,
+                   repository: repo,
+                   filePath: filepath,
+                   defaultBranch: branch
+                 }
+               }
+
+
+               const getFilePath = (id) => {
+
+                 switch (id)
+                 {
+                     case "23df7c56-989e-4931-b8a0-b8c9c3090c47":
+                       return "apps/otel-demo/hpa-accounting.yaml"
+                       break;
+                     case "6e1a79ee-67ae-43d9-85f9-f86e9f64cb2f":
+                       return "apps/otel-demo/hpa-adservice.yaml"
+                       break;
+                     case "22940164-667f-4c4f-a83e-2862a5a6903d":
+                        return "apps/otel-demo/hpa-cartservice.yaml"
+                       break;
+                     case "df8dd511-0107-4fc6-a4b4-05a5cbe2da96":
+                        return "apps/otel-demo/hpa-checkout.yaml"
+                       break;
+                     case "99eda3ff-8520-43e8-a5e2-4c7bcf182ff8":
+                        return "apps/otel-demo/hpa-currency.yaml"
+                       break;
+                     case "9eadd65d-0577-4f27-ac3d-ff447c13fe4c":
+                        return "apps/otel-demo/hpa-email.yaml"
+                        break;
+                     case "5877bf0c-beed-4036-bab8-219f74958211":
+                        return "apps/otel-demo/hpa-frontend.yaml"
+                        break;
+                    case "167b9444-08ad-4d22-953e-479131962228":
+                        return "apps/otel-demo/hpa-paymentservice.yaml"
+                        break;
+                     case "e9bf678b-65d8-4da6-9f69-8834f651d84a":
+                        return "apps/otel-demo/hpa-productcatalog.yaml"
+                        break;
+                     case "8a94171b-cf03-4ed3-9d18-fb2e260a80db":
+                        return "apps/otel-demo/hpa-quote.yaml"
+                        break;
+                     case "a94b3775-fc2c-4938-915c-138ec2e7a34a":
+                        return "apps/otel-demo/hpa-recommendation.yaml"
+                        break;
+                     case "fcdf15d5-8d4a-4966-835a-5ca2ea6454f5":
+                        return "apps/otel-demo/hpa-shipping.yaml"
+                        break;
+                     case "4bc1299a-58ae-4c19-9533-b19c1b8ca57f":
+                        return "apps/vertical-scaling/deployment.yaml"
+                        break;
+                     case "29495ece-204c-49ca-84e3-1066810cffeb":
+                        return "apps/horizontal-scaling/deployment.yaml"
+                        break;
+                     case "c4e9324f-312f-4a1c-9d32-c8288d73626b":
+                        return "apps/horizontal-scaling/hpa.yaml"
+                        break;
+                     default:
+                       console.log(`issue wit id`);
+                       return ""
+                 }
+               }
           EOT
         )
       })
