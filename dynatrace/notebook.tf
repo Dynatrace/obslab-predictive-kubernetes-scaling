@@ -58,11 +58,82 @@ locals {
           visualization = "table"
         }
       },
+  {
+            id       = "edaf29e5-7717-43d9-a61a-7335f10c4b82"
+            type     = "markdown"
+            markdown = <<-EOT
+              ## 2. Extract workload where  the response time is impacted by resource usage
+
+              The query collect the pods utilization and the span produced by the services
+              it utilize the pearson correlation comparing cpu utilization , percentile response time and memory utilization , percentile response time
+            EOT
+          },
+          {
+            id        = "d8447c80-c02c-4ed6-a166-132b939b14eb"
+            type      = "dql"
+            showTitle = false
+            height    = 250
+            state = {
+              input = {
+                value = chomp(
+                  <<-EOT
+                 fetch dt.entity.container_group_instance
+                 | fields id, container.id = id, container.name = entity.name, ipAddress, containerizationType, containerImageName, containerProperties, cluster.id = belongs_to[dt.entity.kubernetes_cluster], namespace.id = belongs_to[dt.entity.cloud_application_namespace], workload.id = belongs_to[dt.entity.cloud_application], pod.id = belongs_to[dt.entity.cloud_application_instance],  namespaceName, workload.name = workloadName, pod.name = podName
+                 | filter isNotNull(cluster.id)
+                 | fieldsAdd Appnamespace = in(namespaceName, "dynatrace","kube-system","falco","kyverno","gmp-system","cert-manager","kuma-system")
+                 | filter not Appnamespace
+                 | lookup [
+                       fetch dt.entity.kubernetes_cluster, from: -30m
+                       | fields id, clusterName = entity.name, cluster.distribution = kubernetesDistribution, cluster.cluster_id = kubernetesClusterId, cluster.app_enabled = appEnabled
+                       | limit 10000
+                       ], sourceField:cluster.id, lookupField:id, fields:{clusterName,cluster.distribution,cluster.cluster_id,cluster.app_enabled}
+                 | lookup [
+                     timeseries { result_memory=avg(dt.kubernetes.container.memory_working_set), result_cpu= avg(dt.kubernetes.container.cpu_usage)},  by:{k8s.workload.name,k8s.pod.name}
+                   ], sourceField:workload.name, lookupField:k8s.workload.name, fields:{result_memory,result_cpu}
+                 | lookup  [
+                     fetch dt.entity.cloud_application, from: -30m
+                     | fieldsAdd kubernetesAnnotations,clusterId=clustered_by[`dt.entity.kubernetes_cluster`]
+                     | filter cloudApplicationDeploymentTypes!="KUBERNETES_CRON_JOB"
+                     | fieldsAdd owner= if(isNotNull(kubernetesAnnotations[dt.owner]),kubernetesAnnotations[dt.owner],else: "NA")
+                 ], sourceField:workload.id, lookupField:id, fields:{owner,annotations = kubernetesAnnotations, clusterId }
+                 | lookup [
+                     fetch spans
+                     | filter request.is_root_span==true
+                     | makeTimeseries percentile=percentile(duration,95) , by:{k8s.deployment.name,k8s.pod.name}
+                 ], sourceField:pod.name, lookupField:k8s.pod.name, fields:{percentile}
+                 | filter annotations[`predictive-kubernetes-scaling.observability-labs.dynatrace.com/enabled`] == "true"
+                 | filter annotations[`predictive-kubernetes-scaling.observability-labs.dynatrace.com/type`] == "speed"
+                 | fieldsAdd total_memory= arraySize(result_memory),sum_array_memory= arraySum(result_memory),total_cpu= arraySize(result_cpu),sum_array_cpu= arraySum(result_cpu)
+                 | fieldsAdd mean_memory= sum_array_memory/total_memory, mean_cpu=sum_array_cpu/total_cpu
+                 | fieldsAdd div_memory=result_memory[] - mean_memory, div_cpu=result_cpu[] - mean_cpu
+                 | fieldsAdd cor_mem=record(memory=result_memory[], percentile=percentile[]), cor_cpu=record(cpu=result_cpu[], percentile=percentile[])
+                 | expand cor_mem
+                 | expand cor_cpu
+                 | fieldsAdd containers=splitString(container.name, " ")
+                 | fieldsAdd container=containers[1]
+                 | filter not contains (container,"istio")
+                 | summarize {coef_mem=correlation(cor_mem[memory] , cor_mem[percentile]),var_memory=avg(arrayAvg(div_memory)),var_cpu=avg(arrayAvg(div_cpu)),coef_cpu=correlation(cor_cpu[cpu] , cor_cpu[percentile]) ,response=avg(arrayAvg(percentile))*0.001, avg(arrayAvg(result_memory)), avg(arrayAvg(result_cpu)) }, by:{pod.name, container,namespaceName,workload.name,workload.id,owner,clusterName,clusterId,annotations}
+                 | filter isNotNull(coef_cpu)
+                 | filter isNotNull(coef_mem)
+                 | filter coef_mem>0.7 or coef_cpu>0.7
+                 | filter var_cpu> 0.1 or var_memory>0.1 or response> 1000
+                 | fields workloadid= workload.id, container, namespace=namespaceName,workloadname=workload.name,podname=pod.name, clusterName, owner, coef_mem, coef_cpu,var_cpu,var_memory,clusterId,annotations,response
+
+                  EOT
+                )
+                timeframe = {
+                  from = "-8h"
+                  to   = local.to
+                }
+              }
+              visualization = "table"
+            }
+          },
       {
         id       = "af27fbe8-e4b7-4c39-bcaf-247a3b5f5cfa",
         type     = "markdown",
         markdown = <<-EOT
-          ## 2. Predict Resource Usage
+          ## 3. Predict Resource Usage
 
           With our target workloads identified, we'll utilize Dynatrace Davis AI to forecast their future CPU and memory consumption. This will help us determine if they're likely to exceed their defined Kubernetes resource limits.
 
@@ -132,11 +203,12 @@ locals {
           }
         }
       },
+
       {
         id       = "66c1701b-4883-4ff0-a15d-a978aa8016cf",
         type     = "markdown",
         markdown = <<-EOT
-          ### 3. Emit Events
+          ### 4. Emit Events
 
           The final step of the first workflow is to analyze the prediction results and emit a Davis event of type `CUSTOM_INFO` for each workload that needs scaling. This event is associated with the respective Kubernetes workload and includes the scaling prompt and the reasoning behind the decision. By emitting these events, we enable other automations to react and trigger the necessary scaling adjustments.
 

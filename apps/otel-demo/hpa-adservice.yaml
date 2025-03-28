@@ -1,0 +1,21 @@
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: adservice
+  namespace: otel-demo
+  annotations:
+    predictive-kubernetes-scaling.observability-labs.dynatrace.com/uuid: '6e1a79ee-67ae-43d9-85f9-f86e9f64cb2f'
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: opentelemetry-demo-adservice
+  minReplicas: 1
+  maxReplicas: 2
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 70

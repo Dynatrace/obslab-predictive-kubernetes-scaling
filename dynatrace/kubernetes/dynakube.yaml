@@ -6,6 +6,7 @@ metadata:
   namespace: dynatrace
   annotations:
     feature.dynatrace.com/k8s-app-enabled: "true"
+    feature.dynatrace.com/automatic-kubernetes-api-monitoring-cluster-name: "predictive-kubernetes-scaling-demo"
 spec:
   apiUrl: https://DYNATRACE_LIVE_URL/api
 
@@ -14,6 +15,9 @@ spec:
   oneAgent:
     applicationMonitoring:
       useCSIDriver: true
+      namespaceSelector:
+        matchLabels:
+          oneagent: "true"
   activeGate:
     capabilities:
       - kubernetes-monitoring

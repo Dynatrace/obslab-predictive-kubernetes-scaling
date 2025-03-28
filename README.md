@@ -11,3 +11,20 @@ Watch the full companion video on YouTube:
 
 ## [Start the hands-on here >>](https://dynatrace.github.io/obslab-predictive-kubernetes-scaling)
 
+### 2.Create a GKE cluster
+```shell
+ZONE=europe-west3-a
+NAME=isitobservable-predectivescaling
+gcloud container clusters create ${NAME} --zone=${ZONE} --machine-type=e2-standard-4 --num-nodes=2
+```
+
+
+```shell
+export DYNATRACE_ENVIRONMENT_ID=<environment id >
+export DYNATRACE_ENVIRONMENT=<dev/prod/staging>
+export DYNATRACE_API_TOKEN=<api token>
+export DYNATRACE_PLATFORM_TOKEN=<platform token>
+export DYNATRACE_OAUTH_CLIENT_ID=<oauth token>
+export DYNATRACE_OAUTH_CLIENT_SECRET=<oaout secret>
+.devcontainer/post-create.sh --deploymentmode gke
+```
