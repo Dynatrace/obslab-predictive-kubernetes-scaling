@@ -6,7 +6,6 @@ metadata:
   labels:
     app: anomaly-simulation
   annotations:
-    dt.owner: 'predictive-kubernetes-scaling'
     predictive-kubernetes-scaling.observability-labs.dynatrace.com/enabled: 'true'
     predictive-kubernetes-scaling.observability-labs.dynatrace.com/managed-by-repo: 'Dynatrace/obslab-predictive-kubernetes-scaling'
     predictive-kubernetes-scaling.observability-labs.dynatrace.com/uuid: '29495ece-204c-49ca-84e3-1066810cffeb'
