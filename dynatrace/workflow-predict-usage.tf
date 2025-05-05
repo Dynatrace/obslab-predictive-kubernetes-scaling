@@ -1,15 +1,19 @@
 data "http" "get_edge_connect" {
   method = "GET"
-  url    = "${var.dynatrace_live_url}/api/v2/settings/objects?schemaIds=app:dynatrace.kubernetes.connector:connection&filter=value.name='${var.codespace_name}'"
+  url    = "${var.dynatrace_apps_url}/platform/app-engine/edge-connect/v1/edge-connects?add-fields=id&filter=${urlencode(join("", ["name='", var.codespace_name, "'"]))}"
 
   request_headers = {
     Accept        = "application/json"
-    Authorization = "Api-Token ${dynatrace_api_token.read_settings_objects.token}"
+    Authorization = "Bearer ${var.dynatrace_platform_token}"
   }
 }
 
+output "test" {
+  value = data.http.get_edge_connect.response_body
+}
+
 resource "dynatrace_automation_workflow" "predict_resource_usage" {
-  title       = "Predict Kubernetes Resource Usage [${var.demo_name}]"
+  title       = "Predict Kubernetes Resource Usage [${var.demo_name} - ${var.codespace_name}]"
   description = "Predicts how much resources certain Kubernetes workloads will need in the future and emits events in case Kubernetes limits will be exceeded."
   tasks {
     task {
@@ -329,7 +333,7 @@ resource "dynatrace_automation_workflow" "predict_resource_usage" {
       input = jsonencode({
         name       = "{{ _.workload.name }}"
         namespace  = "{{ _.workload.namespace }}"
-        connection = jsondecode(data.http.get_edge_connect.response_body).items[0].objectId,
+        connection = jsondecode(data.http.get_edge_connect.response_body).edgeConnects[0].id,
         resourceType = {
           apiVersion = "autoscaling/v2"
           kind       = "HorizontalPodAutoscaler"

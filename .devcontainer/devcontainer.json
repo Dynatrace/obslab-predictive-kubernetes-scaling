@@ -54,6 +54,9 @@
     },
     "DYNATRACE_OAUTH_CLIENT_SECRET": {
       "description": "Dynatrace OAuth client secret. See `DYNATRACE_OAUTH_CLIENT_ID` for permissions"
+    },
+    "DYNATRACE_OAUTH_CLIENT_ACCOUNT_URN": {
+      "description": "Account urn of the Dynatrace OAuth client. See `DYNATRACE_OAUTH_CLIENT_ID` for permissions"
     }
   }
 }

@@ -8,7 +8,7 @@
 - A **Grail enabled Dynatrace SaaS Tenant**
   where [Davis CoPilot](https://www.dynatrace.com/platform/artificial-intelligence/){target="_blank"} is enabled ([sign up here](https://dt-url.net/trial){target="_blank"}).
 - A **GitHub account** to interact with the demo repository.
-- The [GitHub for Workflows app](){target=_blank} installed (via Hub on your Dynatrace environment)
+- The GitHub for Workflows app installed (via Hub on your Dynatrace environment)
     - Press `ctrl + k`. Search for `Hub`.
     - In the hub, search for `Github for Workflows` and install the application
 

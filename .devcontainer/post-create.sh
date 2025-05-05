@@ -32,6 +32,11 @@ if [[ -z "$DYNATRACE_OAUTH_CLIENT_SECRET" ]]; then
   exit 1
 fi
 
+if [[ -z "$DYNATRACE_OAUTH_CLIENT_ACCOUNT_URN" ]]; then
+  echo "Error: DYNATRACE_OAUTH_CLIENT_ACCOUNT_URN not set. See https://dynatrace.github.io/obslab-predictive-kubernetes-scaling/getting-started/#1-prepare-your-environment for instructions on how to start the dev container."
+  exit 1
+fi
+
 kind create cluster --config .devcontainer/kind-cluster.yaml --wait 300s
 kubectl cluster-info --context kind-predictive-kubernetes-scaling-demo
 

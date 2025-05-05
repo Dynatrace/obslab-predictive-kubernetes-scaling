@@ -25,11 +25,12 @@ fi
 export TF_VAR_github_token=$GITHUB_TOKEN
 export TF_VAR_dynatrace_platform_token=$DYNATRACE_PLATFORM_TOKEN
 export TF_VAR_dynatrace_live_url="https://$DYNATRACE_LIVE_URL"
+export TF_VAR_dynatrace_apps_url="https://$DYNATRACE_APPS_URL"
 export TF_VAR_dynatrace_environment_id=$DYNATRACE_ENVIRONMENT_ID
 export TF_VAR_codespace_name=$CODESPACE_NAME
-
-export DYNATRACE_AUTOMATION_CLIENT_ID=$DYNATRACE_OAUTH_CLIENT_ID
-export DYNATRACE_AUTOMATION_CLIENT_SECRET=$DYNATRACE_OAUTH_CLIENT_SECRET
+export TF_VAR_dynatrace_oauth_client_id=$DYNATRACE_OAUTH_CLIENT_ID
+export TF_VAR_dynatrace_oauth_client_secret=$DYNATRACE_OAUTH_CLIENT_SECRET
+export TF_VAR_dynatrace_oauth_client_account_urn=$DYNATRACE_OAUTH_CLIENT_ACCOUNT_URN
 
 terraform init
 
@@ -86,4 +87,4 @@ sleep 60
 ######################
 
 # Finally deploy all infrastructure
-terraform apply -auto-approve
+terraform apply -auto-approve > tf-apply.log

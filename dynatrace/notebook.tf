@@ -12,7 +12,7 @@ locals {
         id       = "ab5431e7-83bb-47c9-a6d0-ad933be56e20"
         type     = "markdown"
         markdown = <<-EOT
-          # ${var.demo_name}
+          # ${var.demo_name} [${var.codespace_name}]
 
           Struggling to keep up with the demands of dynamic Kubernetes environments? Manual scaling is not only time-consuming and reactive but also prone to errors. We're harnessing the power of Dynatrace Automations and Davis AI to predict resource bottlenecks and automatically open pull requests to scale applications. This proactive approach minimizes downtime, helps you to optimize resource utilization, and ensures your applications perform at their best.
 
@@ -259,6 +259,6 @@ locals {
 
 resource "dynatrace_document" "notebook" {
   type    = "notebook"
-  name    = var.demo_name
+  name    = "${var.demo_name} [${var.codespace_name}]"
   content = local.notebook
 }

@@ -28,7 +28,7 @@ RUN curl -sSL -o /usr/local/bin/kind https://kind.sigs.k8s.io/dl/v0.23.0/kind-li
     && chmod +x /usr/local/bin/kind
 
 # Install Terraform
-RUN curl -sSL -o terraform.zip https://releases.hashicorp.com/terraform/1.9.2/terraform_1.9.2_linux_amd64.zip \
+RUN curl -sSL -o terraform.zip https://releases.hashicorp.com/terraform/1.11.4/terraform_1.11.4_linux_amd64.zip \
     && unzip terraform.zip \
     && mv terraform /usr/local/bin/terraform \
     && rm terraform.zip \

@@ -2,11 +2,7 @@ terraform {
   required_providers {
     dynatrace = {
       source = "dynatrace-oss/dynatrace"
-      version = "1.62.0"
-    }
-    http = {
-      source = "hashicorp/http"
-      version = "3.4.3"
+      version = "1.79.3"
     }
   }
 }

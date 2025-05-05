@@ -2,14 +2,14 @@ resource "dynatrace_generic_setting" "github_credentials" {
   schema = "app:dynatrace.github.connector:connection"
   scope  = "environment"
   value = jsonencode({
-    name  = "Default Connection [${var.demo_name}]"
+    name  = substr(join(" - ", [var.demo_name, var.codespace_name]), 0, 49)
     type  = "pat"
     token = var.github_token
   })
 }
 
 resource "dynatrace_automation_workflow" "commit_prediction" {
-  title       = "Commit Davis Prediction [${var.demo_name}]"
+  title       = "Commit Davis Prediction [${var.demo_name} - ${var.codespace_name}]"
   description = "Reacts to events containing suggestions based on Davis resource usage prediction and applies them by creating a pull request on GitHub"
   tasks {
     task {
