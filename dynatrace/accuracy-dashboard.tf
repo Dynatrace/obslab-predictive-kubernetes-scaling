@@ -690,6 +690,6 @@ locals {
 
 resource "dynatrace_document" "accuracy_dashboard" {
   type    = "dashboard"
-  name    = "${var.demo_name} Accuracy"
+  name    = "${var.demo_name} Accuracy [${var.codespace_name}]"
   content = local.accuracy_dashboard
 }

@@ -8,21 +8,6 @@ variable "dynatrace_platform_token" {
   sensitive = true
 }
 
-variable "dynatrace_oauth_client_id" {
-  type      = string
-  sensitive = true
-}
-
-variable "dynatrace_oauth_client_secret" {
-  type      = string
-  sensitive = true
-}
-
-variable "dynatrace_oauth_client_account_urn" {
-  type      = string
-  sensitive = true
-}
-
 variable "dynatrace_live_url" {
   type = string
 }

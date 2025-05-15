@@ -38,6 +38,7 @@ to deploy the workflows and notebook used in this demo. Permissions:
     - `settings:objects:write`
 - A Dynatrace [Platform token](https://docs.dynatrace.com/docs/manage/identity-access-management/access-tokens-and-oauth-clients/platform-tokens){target=_blank} to trigger the Davis CoPilot from the demo workflow. Permissions:
     - `davis-copilot:conversations:execute`
+    - `app-engine:edge-connects:read`
 - [Allow an outbound connection from Dynatrace](https://developer.dynatrace.com/develop/functions/allow-outbound-connections/){target="_blank"}
   to `api.github.com` so that the demo workflow can communicate with GitHub.
 

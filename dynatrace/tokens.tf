@@ -8,7 +8,7 @@ resource "dynatrace_api_token" "manage_workflows" {
     "credentialVault.write",
     // Manage GitHub connections
     "settings.read",
-    "settings.write"
+    "settings.write",
   ]
 }
 
