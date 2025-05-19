@@ -21,6 +21,7 @@ RUN curl -sSL -o /usr/local/bin/kubectl https://storage.googleapis.com/kubernete
     && chmod +x /usr/local/bin/kubectl
 
 # Install Helm
+ENV DESIRED_VERSION=v3.17.3
 RUN curl -s https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash -
 
 # Install kind

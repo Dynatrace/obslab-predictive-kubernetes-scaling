@@ -120,10 +120,10 @@ resource "dynatrace_automation_workflow" "predict_resource_usage" {
               prediction.result.output
                 .filter(output => output.analysisStatus == 'OK' && output.forecastQualityAssessment == 'VALID')
                 .forEach(output => {
-                  const query = JSON.parse(output.analyzedTimeSeriesQuery.expression);
+                  const query = output.analyzedTimeSeriesQuery.expression;
                   const result = output.timeSeriesDataWithPredictions.records[0];
 
-                  let resource = query.timeSeriesData.records[0].cpuUsage ? 'cpu' : 'memory';
+                  let resource = query.records[0].cpuUsage ? 'cpu' : 'memory';
                   const highestPrediction = getHighestPrediction(result.timeframe, result.interval, resource, result['dt.davis.forecast:upper'])
                   workloads = addOrUpdateWorkload(workloads, result, highestPrediction);
                 })
@@ -161,16 +161,14 @@ resource "dynatrace_automation_workflow" "predict_resource_usage" {
             }
 
             const annotations = JSON.parse(result.annotations.replaceAll(`'`, `"`));
-            const hpa = annotations['${var.annotation_prefix}/managed-by-hpa'];
+            const hpa = annotations['predictive-kubernetes-scaling.observability-labs.dynatrace.com/hpa'];
 
-            workloads.push({
+            const workload = {
               cluster: result.cluster,
               clusterId: result.clusterId,
               namespace: result.namespace,
               kind: result.kind,
               name: result.name,
-              repository: annotations['${var.annotation_prefix}/managed-by-repo'],
-              uuid: annotations['${var.annotation_prefix}/uuid'],
               predictions: [prediction],
               scalingConfig: {
                 horizontalScaling: {
@@ -184,21 +182,31 @@ resource "dynatrace_automation_workflow" "predict_resource_usage" {
                   cpu: result.cpuLimit,
                 },
                 targetUtilization: getTargetUtilization(annotations),
-                scaleDown: annotations['${var.annotation_prefix}/scale-down'] ?? 'true' === 'true',
+                scaleDown: annotations['predictive-kubernetes-scaling.observability-labs.dynatrace.com/scale-down'] ?? 'true' === 'true',
               }
-            })
+            };
 
+            if (annotations['predictive-kubernetes-scaling.observability-labs.dynatrace.com/repo']) {
+              const repoInfo = annotations['predictive-kubernetes-scaling.observability-labs.dynatrace.com/repo'].split("/");
+              workload.repository = {
+                owner: repoInfo[0],
+                name: repoInfo[1],
+              };
+              workload.path = annotations['predictive-kubernetes-scaling.observability-labs.dynatrace.com/path'];
+            }
+
+            workloads.push(workload);
             return workloads;
           }
 
           const getTargetUtilization = (annotations) => {
-            const defaultRange = annotations['${var.annotation_prefix}/target-utilization'] ?? '80-90';
+            const defaultRange = annotations['predictive-kubernetes-scaling.observability-labs.dynatrace.com/target-utilization'] ?? '80-90';
             const targetUtilization = {};
 
-            const cpuRange = annotations['${var.annotation_prefix}/target-cpu-utilization'] ?? defaultRange;
+            const cpuRange = annotations['predictive-kubernetes-scaling.observability-labs.dynatrace.com/target-cpu-utilization'] ?? defaultRange;
             targetUtilization.cpu = getTargetUtilizationFromRange(cpuRange);
 
-            const memoryRange = annotations['${var.annotation_prefix}/target-memory-utilization'] ?? defaultRange;
+            const memoryRange = annotations['predictive-kubernetes-scaling.observability-labs.dynatrace.com/target-memory-utilization'] ?? defaultRange;
             targetUtilization.memory = getTargetUtilizationFromRange(memoryRange);
 
             return targetUtilization;
@@ -362,7 +370,7 @@ resource "dynatrace_automation_workflow" "predict_resource_usage" {
       input = jsonencode({
         script = chomp(
           <<-EOT
-          import {execution, actionExecution} from "@dynatrace-sdk/automation-utils";
+          import {actionExecution, execution} from "@dynatrace-sdk/automation-utils";
 
           export default async function ({execution_id, action_execution_id}) {
             const actionEx = await actionExecution(action_execution_id);
@@ -377,6 +385,8 @@ resource "dynatrace_automation_workflow" "predict_resource_usage" {
               && manifest.metadata.namespace === workload.namespace
               && manifest.spec.scaleTargetRef.name === workload.name
             );
+            const annotations = hpaManifest.metadata.annotations;
+            const repoInfo = annotations['predictive-kubernetes-scaling.observability-labs.dynatrace.com/repo'].split("/");
 
             // Adjust limits
             const maxReplicas = hpaManifest.spec.maxReplicas;
@@ -384,7 +394,11 @@ resource "dynatrace_automation_workflow" "predict_resource_usage" {
             workload.scalingConfig.horizontalScaling.hpa = {
               ...workload.scalingConfig.horizontalScaling.hpa,
               maxReplicas,
-              uuid: hpaManifest.metadata.annotations['${var.annotation_prefix}/uuid'],
+              repository: {
+                owner: repoInfo[0],
+                name: repoInfo[1],
+              },
+              path: annotations['predictive-kubernetes-scaling.observability-labs.dynatrace.com/path'],
               limits: {
                 cpu: maxReplicas * workload.scalingConfig.limits.cpu,
                 memory: maxReplicas * workload.scalingConfig.limits.memory
@@ -531,7 +545,7 @@ resource "dynatrace_automation_workflow" "predict_resource_usage" {
         script = chomp(
           <<-EOT
           import {actionExecution} from "@dynatrace-sdk/automation-utils";
-          import {eventsClient, EventIngestEventType} from "@dynatrace-sdk/client-classic-environment-v2";
+          import {EventIngestEventType, eventsClient} from "@dynatrace-sdk/client-classic-environment-v2";
 
           export default async function ({action_execution_id}) {
             const actionEx = await actionExecution(action_execution_id);
@@ -563,12 +577,13 @@ resource "dynatrace_automation_workflow" "predict_resource_usage" {
               }
             }
 
+            const target = horizontalScalingConfig.enabled ? horizontalScalingConfig.hpa : workload;
             const targetUtilization = workload.scalingConfig.targetUtilization;
 
             const event = {
               eventType: EventIngestEventType.CustomInfo,
               title: 'Suggesting to Scale Because of Davis AI Predictions',
-              entitySelector: `type(CLOUD_APPLICATION),entityName.equals("$${workload.name}"),namespaceName("$${workload.namespace}"),toRelationships.isClusterOfCa(type(KUBERNETES_CLUSTER),entityId("$${workload.clusterId}"))`,
+              entitySelector: `type(CLOUD_APPLICATION),entityName.equals("${workload.name}"),namespaceName("${workload.namespace}"),toRelationships.isClusterOfCa(type(KUBERNETES_CLUSTER),entityId("${workload.clusterId}"))`,
               properties: {
                 'kubernetes.predictivescaling.type': 'DETECT_SCALING',
 
@@ -597,8 +612,9 @@ resource "dynatrace_automation_workflow" "predict_resource_usage" {
                 'kubernetes.predictivescaling.targetutilization.memory.point': targetUtilization.memory.point,
 
                 // Target
-                'kubernetes.predictivescaling.target.uuid': horizontalScalingConfig.enabled ? horizontalScalingConfig.hpa.uuid : workload.uuid,
-                'kubernetes.predictivescaling.target.repository': workload.repository,
+                'kubernetes.predictivescaling.target.path': target.path,
+                'kubernetes.predictivescaling.target.repository.owner': target.repository.owner,
+                'kubernetes.predictivescaling.target.repository.name': target.repository.name,
               },
             }
 

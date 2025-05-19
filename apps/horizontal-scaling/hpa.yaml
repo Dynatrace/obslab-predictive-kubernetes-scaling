@@ -4,7 +4,8 @@ metadata:
   name: anomaly-simulation
   namespace: horizontal-scaling
   annotations:
-    predictive-kubernetes-scaling.observability-labs.dynatrace.com/uuid: 'c4e9324f-312f-4a1c-9d32-c8288d73626b'
+    predictive-kubernetes-scaling.observability-labs.dynatrace.com/repo: 'KatharinaSick/obslab-predictive-kubernetes-scaling'
+    predictive-kubernetes-scaling.observability-labs.dynatrace.com/path: 'apps/horizontal-scaling/hpa.yaml'
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
