@@ -8,8 +8,8 @@ metadata:
   annotations:
     dt.owner: 'predictive-kubernetes-scaling'
     predictive-kubernetes-scaling.observability-labs.dynatrace.com/enabled: 'true'
-    predictive-kubernetes-scaling.observability-labs.dynatrace.com/managed-by-repo: 'Dynatrace/obslab-predictive-kubernetes-scaling'
-    predictive-kubernetes-scaling.observability-labs.dynatrace.com/uuid: '4bc1299a-58ae-4c19-9533-b19c1b8ca57f'
+    predictive-kubernetes-scaling.observability-labs.dynatrace.com/repo: 'Dynatrace/obslab-predictive-kubernetes-scaling'
+    predictive-kubernetes-scaling.observability-labs.dynatrace.com/path: 'apps/vertical-scaling/deployment.yaml'
     predictive-kubernetes-scaling.observability-labs.dynatrace.com/target-utilization: '80-90'
     predictive-kubernetes-scaling.observability-labs.dynatrace.com/target-cpu-utilization: '80-90'
     predictive-kubernetes-scaling.observability-labs.dynatrace.com/target-memory-utilization: '80-90'
