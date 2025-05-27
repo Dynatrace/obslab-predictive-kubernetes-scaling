@@ -38,7 +38,7 @@
   "postCreateCommand": ".devcontainer/post-create.sh",
   "secrets": {
     "DYNATRACE_ENVIRONMENT_ID": {
-      description: "The id of your Dynatrace tenant. E.g. `abc12345` from `https://abc12345.live.apps.dynatrace.com`"
+      "description": "The id of your Dynatrace tenant. E.g. `abc12345` from `https://abc12345.live.apps.dynatrace.com`"
     },
     "DYNATRACE_ENVIRONMENT": {
       "description": "Either `live`, `sprint` or `dev`. If unsure, use `live`"
