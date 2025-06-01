@@ -7,7 +7,7 @@ metadata:
     app: anomaly-simulation
   annotations:
     predictive-kubernetes-scaling.observability-labs.dynatrace.com/enabled: 'true'
-    predictive-kubernetes-scaling.observability-labs.dynatrace.com/repo: 'KatharinaSick/obslab-predictive-kubernetes-scaling'
+    predictive-kubernetes-scaling.observability-labs.dynatrace.com/repo: 'Dynatrace/obslab-predictive-kubernetes-scaling'
     predictive-kubernetes-scaling.observability-labs.dynatrace.com/path: 'apps/vertical-scaling/deployment.yaml'
     predictive-kubernetes-scaling.observability-labs.dynatrace.com/target-utilization: '80-90'
     predictive-kubernetes-scaling.observability-labs.dynatrace.com/target-cpu-utilization: '80-90'
