@@ -13,8 +13,8 @@ resource "dynatrace_automation_workflow" "commit_prediction" {
   description = "Reacts to events containing suggestions based on Davis resource usage prediction and applies them by creating a pull request on GitHub"
   tasks {
     task {
-      name        = "get_default_branch"
-      description = "Gets the default branch of the target repository"
+      name        = "get_repository_data"
+      description = "Fetches the default branch of the target repository and outputs all important repository data"
       action      = "dynatrace.automations:run-javascript"
       active      = true
       input = jsonencode({
@@ -35,10 +35,10 @@ resource "dynatrace_automation_workflow" "commit_prediction" {
               id: "CREDENTIALS_VAULT-3723D7942EA49611",
             }).then((credentials) => credentials.token);
 
-            const repoInfo = await fetch(`https://api.github.com/repos/${owner}/${repo}`, {
+            const repoInfo = await fetch(`https://api.github.com/repos/$${owner}/$${repo}`, {
               method: 'GET',
               headers: {
-                'Authorization': `Bearer ${apiToken}`
+                'Authorization': `Bearer $${apiToken}`
               }
             }).then(response => response.json());
 
@@ -63,10 +63,10 @@ resource "dynatrace_automation_workflow" "commit_prediction" {
       action      = "dynatrace.github.connector:get-content"
       active      = true
       input = jsonencode({
-        owner        = "{{ result(\"find_manifest\").owner }}",
-        repository   = "{{ result(\"find_manifest\").repository }}",
-        filePath     = "{{ result(\"find_manifest\").filePath }}",
-        reference    = "{{ result(\"find_manifest\").defaultBranch }}",
+        owner        = "{{ result(\"get_repository_data\").owner }}",
+        repository   = "{{ result(\"get_repository_data\").repository }}",
+        filePath     = "{{ result(\"get_repository_data\").filePath }}",
+        reference    = "{{ result(\"get_repository_data\").defaultBranch }}",
         connectionId = dynatrace_generic_setting.github_credentials.id
       })
       position {
@@ -75,7 +75,7 @@ resource "dynatrace_automation_workflow" "commit_prediction" {
       }
       conditions {
         states = {
-          find_manifest = "OK"
+          get_repository_data = "OK"
         }
       }
     }
@@ -138,12 +138,12 @@ resource "dynatrace_automation_workflow" "commit_prediction" {
       action      = "dynatrace.github.connector:create-or-replace-file"
       active      = true
       input = jsonencode({
-        owner : "{{ result(\"find_manifest\").owner }}",
-        repository : "{{ result(\"find_manifest\").repository }}",
+        owner : "{{ result(\"get_repository_data\").owner }}",
+        repository : "{{ result(\"get_repository_data\").repository }}",
         createNewBranch : true
-        sourceBranch : "{{ result(\"find_manifest\").defaultBranch }}",
+        sourceBranch : "{{ result(\"get_repository_data\").defaultBranch }}",
         branch : "apply-davis-predictions-{{result(\"apply_suggestions\").time}}",
-        filePath : "{{ result(\"find_manifest\").filePath }}",
+        filePath : "{{ result(\"get_repository_data\").filePath }}",
         fileContent : "{{ result(\"apply_suggestions\").manifest }}",
         commitMessage : "Apply suggestions predicted by Davis AI:\n\n{{ result(\"apply_suggestions\").description }}",
         connectionId : dynatrace_generic_setting.github_credentials.id
@@ -164,10 +164,10 @@ resource "dynatrace_automation_workflow" "commit_prediction" {
       action      = "dynatrace.github.connector:create-pull-request"
       active      = true
       input = jsonencode({
-        owner        = "{{ result(\"find_manifest\").owner }}",
-        repository   = "{{ result(\"find_manifest\").repository }}",
+        owner        = "{{ result(\"get_repository_data\").owner }}",
+        repository   = "{{ result(\"get_repository_data\").repository }}",
         sourceBranch = "apply-davis-predictions-{{result(\"apply_suggestions\").time}}",
-        targetBranch = "{{ result(\"find_manifest\").defaultBranch }}"
+        targetBranch = "{{ result(\"get_repository_data\").defaultBranch }}"
         title        = "Apply suggestions predicted by Dynatrace Davis AI",
         description  = "{{ result(\"apply_suggestions\").description }}",
         connectionId = dynatrace_generic_setting.github_credentials.id

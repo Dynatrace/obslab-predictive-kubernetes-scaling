@@ -583,7 +583,7 @@ resource "dynatrace_automation_workflow" "predict_resource_usage" {
             const event = {
               eventType: EventIngestEventType.CustomInfo,
               title: 'Suggesting to Scale Because of Davis AI Predictions',
-              entitySelector: `type(CLOUD_APPLICATION),entityName.equals("${workload.name}"),namespaceName("${workload.namespace}"),toRelationships.isClusterOfCa(type(KUBERNETES_CLUSTER),entityId("${workload.clusterId}"))`,
+              entitySelector: `type(CLOUD_APPLICATION),entityName.equals("$${workload.name}"),namespaceName("$${workload.namespace}"),toRelationships.isClusterOfCa(type(KUBERNETES_CLUSTER),entityId("$${workload.clusterId}"))`,
               properties: {
                 'kubernetes.predictivescaling.type': 'DETECT_SCALING',
 
