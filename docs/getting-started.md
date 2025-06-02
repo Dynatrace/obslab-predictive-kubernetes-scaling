@@ -8,7 +8,7 @@
 - A **Grail enabled Dynatrace SaaS Tenant**
   where [Davis CoPilot](https://www.dynatrace.com/platform/artificial-intelligence/){target="_blank"} is enabled ([sign up here](https://dt-url.net/trial){target="_blank"}).
 - A **GitHub account** to interact with the demo repository.
-- The [GitHub for Workflows app](){target=_blank} installed (via Hub on your Dynatrace environment)
+- The GitHub for Workflows app installed (via Hub on your Dynatrace environment)
     - Press `ctrl + k`. Search for `Hub`.
     - In the hub, search for `Github for Workflows` and install the application
 
@@ -38,17 +38,9 @@ to deploy the workflows and notebook used in this demo. Permissions:
     - `settings:objects:write`
 - A Dynatrace [Platform token](https://docs.dynatrace.com/docs/manage/identity-access-management/access-tokens-and-oauth-clients/platform-tokens){target=_blank} to trigger the Davis CoPilot from the demo workflow. Permissions:
     - `davis-copilot:conversations:execute`
+    - `app-engine:edge-connects:read`
 - [Allow an outbound connection from Dynatrace](https://developer.dynatrace.com/develop/functions/allow-outbound-connections/){target="_blank"}
   to `api.github.com` so that the demo workflow can communicate with GitHub.
-
-!!! info "Wait for GitHub to Index Your Fork"
-    The Dynatrace workflow relies on GitHub search functionality. Therefore it is important to wait until GitHub search has indexed your fork.
-
-    To test this, try searching your fork for `predictive-kubernetes-scaling.observability-labs.dynatrace.com`
-
-    If you get a warning: `⚠️ This repository's code is being indexed right now. Try again in a few minutes.` you should not proceed.
-
-    Wait until the search completes successfully, then proceed.
 
 ## 2. Create Your Development Environment
 
@@ -56,7 +48,7 @@ to deploy the workflows and notebook used in this demo. Permissions:
 
 - Fork [this repository](https://github.com/Dynatrace/obslab-predictive-kubernetes-scaling/tree/main){target="_blank"} to your GitHub account. This will allow you to make changes and submit pull requests
   later on.
-- Adjust the `predictive-kubernetes-scaling.observability-labs.dynatrace.com/managed-by-repo` annotations in 
+- Adjust the `predictive-kubernetes-scaling.observability-labs.dynatrace.com/repo` annotations in 
 - [`apps/horizontal-scaling/deployment.yaml`](https://github.com/Dynatrace/obslab-predictive-kubernetes-scaling/blob/main/apps/horizontal-scaling/deployment.yaml){target="_blank"} and
   [`apps/vertical-scaling/deployment.yaml`](https://github.com/Dynatrace/obslab-predictive-kubernetes-scaling/blob/main/apps/vertical-scaling/deployment.yaml){target="_blank"} to match your forked repository.
 - Create a new Codespace

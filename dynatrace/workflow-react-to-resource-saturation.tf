@@ -1,5 +1,5 @@
 resource "dynatrace_automation_workflow" "react_to_resource_saturation" {
-  title       = "React to Resource Saturation [${var.demo_name}]"
+  title       = "React to Resource Saturation [${var.demo_name} - ${var.codespace_name}]"
   description = "Is triggered when Davis detects a resource saturation problem and then triggers the 'Predict Kubernetes Resource Usage' workflow to create a Pull Request"
   tasks {
     task {

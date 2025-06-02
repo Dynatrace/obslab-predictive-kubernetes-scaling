@@ -21,6 +21,7 @@ RUN curl -sSL -o /usr/local/bin/kubectl https://storage.googleapis.com/kubernete
     && chmod +x /usr/local/bin/kubectl
 
 # Install Helm
+ENV DESIRED_VERSION=v3.17.3
 RUN curl -s https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash -
 
 # Install kind
@@ -28,7 +29,7 @@ RUN curl -sSL -o /usr/local/bin/kind https://kind.sigs.k8s.io/dl/v0.23.0/kind-li
     && chmod +x /usr/local/bin/kind
 
 # Install Terraform
-RUN curl -sSL -o terraform.zip https://releases.hashicorp.com/terraform/1.9.2/terraform_1.9.2_linux_amd64.zip \
+RUN curl -sSL -o terraform.zip https://releases.hashicorp.com/terraform/1.12.0/terraform_1.12.0_linux_amd64.zip \
     && unzip terraform.zip \
     && mv terraform /usr/local/bin/terraform \
     && rm terraform.zip \

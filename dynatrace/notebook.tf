@@ -12,7 +12,7 @@ locals {
         id       = "ab5431e7-83bb-47c9-a6d0-ad933be56e20"
         type     = "markdown"
         markdown = <<-EOT
-          # ${var.demo_name}
+          # ${var.demo_name} [${var.codespace_name}]
 
           Struggling to keep up with the demands of dynamic Kubernetes environments? Manual scaling is not only time-consuming and reactive but also prone to errors. We're harnessing the power of Dynatrace Automations and Davis AI to predict resource bottlenecks and automatically open pull requests to scale applications. This proactive approach minimizes downtime, helps you to optimize resource utilization, and ensures your applications perform at their best.
 
@@ -164,15 +164,15 @@ locals {
                 kubernetes.predictivescaling.workload.kind,
                 kubernetes.predictivescaling.workload.namespace,
                 kubernetes.predictivescaling.workload.name,
-                kubernetes.predictivescaling.workload.uuid,
                 kubernetes.predictivescaling.workload.limits.memory,
                 kubernetes.predictivescaling.workload.limits.cpu,
                 kubernetes.predictivescaling.prediction.type,
                 kubernetes.predictivescaling.prediction.prompt,
                 kubernetes.predictivescaling.prediction.description,
                 kubernetes.predictivescaling.prediction.suggestions,
-                kubernetes.predictivescaling.target.uuid,
-                kubernetes.predictivescaling.target.repository
+                kubernetes.predictivescaling.target.repository.owner,
+                kubernetes.predictivescaling.target.repository.name,
+                kubernetes.predictivescaling.target.path
               EOT
             )
             timeframe = {
@@ -193,7 +193,7 @@ locals {
 
           While we can't demonstrate this second workflow through DQL queries here, you can explore it firsthand by running [this demo](https://github.com/Dynatrace/obslab-predictive-kubernetes-scaling). Here's what the second workflow does in a nutshell:
 
-          - **Search for the Deployment Manifest on GitHub**: The workflow locates the relevant Kubernetes deployment manifest in your GitHub repository. It identifies the correct repository using the `predictive-kubernetes-scaling.observability-labs.dynatrace.com/managed-by-repo` annotation and then utilizes the GitHub Search API to find the correct file.
+          - **Search for the Deployment Manifest on GitHub**: The workflow locates the relevant Kubernetes deployment manifest in your GitHub repository. It identifies the correct repository and file using the `predictive-kubernetes-scaling.observability-labs.dynatrace.com/repo` and `predictive-kubernetes-scaling.observability-labs.dynatrace.com/path` annotations.
           - **Apply Suggestions with Davis CoPilot**: The workflow uses [Davis CoPilot](https://www.dynatrace.com/news/blog/hypermodal-ai-dynatrace-expands-davis-ai-with-davis-copilot/) to apply the scaling suggestions to the fetched manifest. This step intelligently modifies the manifest to reflect the required resource adjustments.
           - **Create a Pull Request on GitHub**: Finally, the workflow employs the GitHub for Workflows app to create a pull request on GitHub, proposing the changes to the deployment manifest. This PR can then be reviewed and merged to implement the scaling updates in your Kubernetes environment.
 
@@ -232,15 +232,15 @@ locals {
                 kubernetes.predictivescaling.workload.kind,
                 kubernetes.predictivescaling.workload.namespace,
                 kubernetes.predictivescaling.workload.name,
-                kubernetes.predictivescaling.workload.uuid,
                 kubernetes.predictivescaling.workload.limits.memory,
                 kubernetes.predictivescaling.workload.limits.cpu,
                 kubernetes.predictivescaling.prediction.type,
                 kubernetes.predictivescaling.prediction.prompt,
                 kubernetes.predictivescaling.prediction.description,
                 kubernetes.predictivescaling.prediction.suggestions,
-                kubernetes.predictivescaling.target.uuid,
-                kubernetes.predictivescaling.target.repository,
+                kubernetes.predictivescaling.target.repository.owner,
+                kubernetes.predictivescaling.target.repository.name,
+                kubernetes.predictivescaling.target.path,
                 kubernetes.predictivescaling.pullrequest.id,
                 kubernetes.predictivescaling.pullrequest.url
                 EOT
@@ -259,6 +259,6 @@ locals {
 
 resource "dynatrace_document" "notebook" {
   type    = "notebook"
-  name    = var.demo_name
+  name    = "${var.demo_name} [${var.codespace_name}]"
   content = local.notebook
 }

@@ -2,19 +2,19 @@ resource "dynatrace_generic_setting" "github_credentials" {
   schema = "app:dynatrace.github.connector:connection"
   scope  = "environment"
   value = jsonencode({
-    name  = "Default Connection [${var.demo_name}]"
+    name  = substr(join(" - ", [var.demo_name, var.codespace_name]), 0, 49)
     type  = "pat"
     token = var.github_token
   })
 }
 
 resource "dynatrace_automation_workflow" "commit_prediction" {
-  title       = "Commit Davis Prediction [${var.demo_name}]"
+  title       = "Commit Davis Prediction [${var.demo_name} - ${var.codespace_name}]"
   description = "Reacts to events containing suggestions based on Davis resource usage prediction and applies them by creating a pull request on GitHub"
   tasks {
     task {
-      name        = "find_manifest"
-      description = "Searches for the workload manifest on GitHub"
+      name        = "get_default_branch"
+      description = "Gets the default branch of the target repository"
       action      = "dynatrace.automations:run-javascript"
       active      = true
       input = jsonencode({
@@ -27,38 +27,26 @@ resource "dynatrace_automation_workflow" "commit_prediction" {
             const ex = await execution(execution_id);
             const event = ex.params.event;
 
+            const owner = event['kubernetes.predictivescaling.target.repository.owner'];
+            const repo = event['kubernetes.predictivescaling.target.repository.name'];
+            const path = event['kubernetes.predictivescaling.target.path'];
+
             const apiToken = await credentialVaultClient.getCredentialsDetails({
-              id: "${dynatrace_credentials.github_pat.id}",
+              id: "CREDENTIALS_VAULT-3723D7942EA49611",
             }).then((credentials) => credentials.token);
 
-            // Search for file
-            const url = 'https://api.github.com/search/code?q=' +
-              `"${var.annotation_prefix}/uuid:%20'$${event['kubernetes.predictivescaling.target.uuid']}'"` +
-              `+repo:$${event['kubernetes.predictivescaling.target.repository']}` +
-              `+language:YAML`
-
-            const response = await fetch(url, {
+            const repoInfo = await fetch(`https://api.github.com/repos/${owner}/${repo}`, {
               method: 'GET',
               headers: {
-                'Authorization': `Bearer $${apiToken}`
-              }
-            }).then(response => response.json());
-
-            const searchResult = response.items[0];
-
-            // Get default branch
-            const repository = await fetch(searchResult.repository.url, {
-              method: 'GET',
-              headers: {
-                'Authorization': `Bearer $${apiToken}`
+                'Authorization': `Bearer ${apiToken}`
               }
             }).then(response => response.json());
 
             return {
-              owner: searchResult.repository.owner.login,
-              repository: searchResult.repository.name,
-              filePath: searchResult.path,
-              defaultBranch: repository.default_branch
+              owner: owner,
+              repository: repo,
+              filePath: path,
+              defaultBranch: repoInfo.default_branch
             }
           }
           EOT
@@ -242,8 +230,9 @@ resource "dynatrace_automation_workflow" "commit_prediction" {
                 'kubernetes.predictivescaling.targetutilization.memory.point': event['kubernetes.predictivescaling.targetutilization.memory.point'],
 
                 // Target
-                'kubernetes.predictivescaling.target.uuid': event['kubernetes.predictivescaling.target.uuid'],
-                'kubernetes.predictivescaling.target.repository': event['kubernetes.predictivescaling.target.repository'],
+                'kubernetes.predictivescaling.target.path': event['kubernetes.predictivescaling.target.path'],
+                'kubernetes.predictivescaling.target.repository.owner': event['kubernetes.predictivescaling.target.repository.owner'],
+                'kubernetes.predictivescaling.target.repository.name': event['kubernetes.predictivescaling.target.repository.name'],
 
                 // Pull Request
                 'kubernetes.predictivescaling.pullrequest.id': `$${pullRequest.id}`,
