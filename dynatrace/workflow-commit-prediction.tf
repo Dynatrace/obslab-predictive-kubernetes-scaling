@@ -32,7 +32,7 @@ resource "dynatrace_automation_workflow" "commit_prediction" {
             const path = event['kubernetes.predictivescaling.target.path'];
 
             const apiToken = await credentialVaultClient.getCredentialsDetails({
-              id: "CREDENTIALS_VAULT-3723D7942EA49611",
+              id: "${dynatrace_credentials.github_pat.id}",
             }).then((credentials) => credentials.token);
 
             const repoInfo = await fetch(`https://api.github.com/repos/$${owner}/$${repo}`, {
@@ -81,46 +81,14 @@ resource "dynatrace_automation_workflow" "commit_prediction" {
     }
     task {
       name        = "apply_suggestions"
-      description = "Uses the Davis CoPilot to apply all suggestions to the given manifest"
-      action      = "dynatrace.automations:run-javascript"
+      description = "Uses Davis CoPilot to apply all suggestions to the given manifest"
+      action      = "dynatrace.davis.copilot.workflow.actions:davis-copilot"
       active      = true
       input = jsonencode({
-        script = chomp(
-          <<-EOT
-          import {execution} from '@dynatrace-sdk/automation-utils';
-          import {credentialVaultClient} from '@dynatrace-sdk/client-classic-environment-v2';
-          import {getEnvironmentUrl} from '@dynatrace-sdk/app-environment'
-
-          export default async function ({execution_id}) {
-            const ex = await execution(execution_id);
-            var manifest = (await ex.result('fetch_manifest')).content;
-            const event = ex.params.event;
-
-            const apiToken = await credentialVaultClient.getCredentialsDetails({
-              id: "${dynatrace_credentials.dynatrace_platform_token.id}",
-            }).then((credentials) => credentials.token);
-
-            const url = `$${getEnvironmentUrl()}/platform/davis/copilot/v0.2/skills/conversations:message`;
-
-            const response = await fetch(url, {
-              method: 'POST',
-              headers: {
-                'Authorization': `Bearer $${apiToken}`,
-                'Content-Type': 'application/json'
-              },
-              body: JSON.stringify({
-                text: `$${event['kubernetes.predictivescaling.prediction.prompt']}\n\n$${manifest}`
-              })
-            }).then(response => response.json());
-
-            return {
-              manifest: response.text.match(/(?<=^```(yaml|yml).*\n)([^`])*(?=^```$)/gm)[0],
-              time: new Date(event.timestamp).getTime(),
-              description: event['kubernetes.predictivescaling.prediction.description']
-            };
-          }
-          EOT
-        )
+        config = "disabled",
+        prompt = "{{ event()['kubernetes.predictivescaling.prediction.prompt'] }}\n\n{{ result(\"fetch_manifest\")[\"content\"] }}",
+        autoTrim = true,
+        supplementary = ""
       })
       position {
         x = 0
@@ -133,20 +101,28 @@ resource "dynatrace_automation_workflow" "commit_prediction" {
       }
     }
     task {
-      name        = "update_manifest"
-      description = "Updates the given manifest and pushes it to a new branch on GitHub"
-      action      = "dynatrace.github.connector:create-or-replace-file"
+      name        = "parse_manifest"
+      description = "Parses the updated manifest and extracts the description and time of the suggestions"
+      action      = "dynatrace.automations:run-javascript"
       active      = true
       input = jsonencode({
-        owner : "{{ result(\"get_repository_data\").owner }}",
-        repository : "{{ result(\"get_repository_data\").repository }}",
-        createNewBranch : true
-        sourceBranch : "{{ result(\"get_repository_data\").defaultBranch }}",
-        branch : "apply-davis-predictions-{{result(\"apply_suggestions\").time}}",
-        filePath : "{{ result(\"get_repository_data\").filePath }}",
-        fileContent : "{{ result(\"apply_suggestions\").manifest }}",
-        commitMessage : "Apply suggestions predicted by Davis AI:\n\n{{ result(\"apply_suggestions\").description }}",
-        connectionId : dynatrace_generic_setting.github_credentials.id
+        script = chomp(
+          <<-EOT
+          import {execution} from '@dynatrace-sdk/automation-utils';
+
+          export default async function ({execution_id}) {
+            const ex = await execution(execution_id);
+            const event = ex.params.event;
+            var copilotResult = (await ex.result('apply_suggestions')).text;
+
+            return {
+              manifest: copilotResult.match(/(?<=```(yaml|yml)\n)([\s\S]*?)(?=```)/gm)[0],
+              time: new Date(event.timestamp).getTime(),
+              description: event['kubernetes.predictivescaling.prediction.description']
+            }
+          }
+          EOT
+        )
       })
       position {
         x = 0
@@ -159,18 +135,20 @@ resource "dynatrace_automation_workflow" "commit_prediction" {
       }
     }
     task {
-      name        = "create_pull_request"
-      description = "Creates a pull request that includes all suggested changes"
-      action      = "dynatrace.github.connector:create-pull-request"
+      name        = "push_manifest"
+      description = "Pushes the updated manifest to a new branch on GitHub"
+      action      = "dynatrace.github.connector:create-or-replace-file"
       active      = true
       input = jsonencode({
-        owner        = "{{ result(\"get_repository_data\").owner }}",
-        repository   = "{{ result(\"get_repository_data\").repository }}",
-        sourceBranch = "apply-davis-predictions-{{result(\"apply_suggestions\").time}}",
-        targetBranch = "{{ result(\"get_repository_data\").defaultBranch }}"
-        title        = "Apply suggestions predicted by Dynatrace Davis AI",
-        description  = "{{ result(\"apply_suggestions\").description }}",
-        connectionId = dynatrace_generic_setting.github_credentials.id
+        owner : "{{ result(\"get_repository_data\").owner }}",
+        repository : "{{ result(\"get_repository_data\").repository }}",
+        createNewBranch : true
+        sourceBranch : "{{ result(\"get_repository_data\").defaultBranch }}",
+        branch : "apply-davis-predictions-{{result(\"parse_manifest\").time}}",
+        filePath : "{{ result(\"get_repository_data\").filePath }}",
+        fileContent : "{{ result(\"parse_manifest\").manifest }}",
+        commitMessage : "Apply suggestions predicted by Davis AI:\n\n{{ result(\"parse_manifest\").description }}",
+        connectionId : dynatrace_generic_setting.github_credentials.id
       })
       position {
         x = 0
@@ -178,7 +156,31 @@ resource "dynatrace_automation_workflow" "commit_prediction" {
       }
       conditions {
         states = {
-          update_manifest = "OK"
+          parse_manifest = "OK"
+        }
+      }
+    }
+    task {
+      name        = "create_pull_request"
+      description = "Creates a pull request that includes all suggested changes"
+      action      = "dynatrace.github.connector:create-pull-request"
+      active      = true
+      input = jsonencode({
+        owner        = "{{ result(\"get_repository_data\").owner }}",
+        repository   = "{{ result(\"get_repository_data\").repository }}",
+        sourceBranch = "apply-davis-predictions-{{result(\"parse_manifest\").time}}",
+        targetBranch = "{{ result(\"get_repository_data\").defaultBranch }}"
+        title        = "Apply suggestions predicted by Dynatrace Davis AI",
+        description  = "{{ result(\"parse_manifest\").description }}",
+        connectionId = dynatrace_generic_setting.github_credentials.id
+      })
+      position {
+        x = 0
+        y = 6
+      }
+      conditions {
+        states = {
+          push_manifest = "OK"
         }
       }
     }
@@ -248,7 +250,7 @@ resource "dynatrace_automation_workflow" "commit_prediction" {
       })
       position {
         x = 0
-        y = 6
+        y = 7
       }
       conditions {
         states = {
