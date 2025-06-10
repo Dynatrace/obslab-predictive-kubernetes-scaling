@@ -1,37 +1,7 @@
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: anomaly-simulation
-  namespace: vertical-scaling
-  labels:
-    app: anomaly-simulation
-  annotations:
-    predictive-kubernetes-scaling.observability-labs.dynatrace.com/enabled: 'true'
-    predictive-kubernetes-scaling.observability-labs.dynatrace.com/repo: 'Dynatrace/obslab-predictive-kubernetes-scaling'
-    predictive-kubernetes-scaling.observability-labs.dynatrace.com/path: 'apps/vertical-scaling/deployment.yaml'
-    predictive-kubernetes-scaling.observability-labs.dynatrace.com/target-utilization: '80-90'
-    predictive-kubernetes-scaling.observability-labs.dynatrace.com/target-cpu-utilization: '80-90'
-    predictive-kubernetes-scaling.observability-labs.dynatrace.com/target-memory-utilization: '80-90'
-    predictive-kubernetes-scaling.observability-labs.dynatrace.com/scale-down: 'true'
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: anomaly-simulation
-  template:
-    metadata:
-      labels:
-        app: anomaly-simulation
-    spec:
-      containers:
-        - name: anomaly-simulation
-          image: ghcr.io/wolfgangb33r/demoservice:v1.0.0
-          ports:
-            - containerPort: 8080
-          resources:
-            requests:
-              memory: 10Mi
-              cpu: 100m
-            limits:
-              memory: 10Mi
-              cpu: 100m
+resources:
+  requests:
+    memory: 2Mi
+    cpu: 61m
+  limits:
+    memory: 2Mi
+    cpu: 61m
