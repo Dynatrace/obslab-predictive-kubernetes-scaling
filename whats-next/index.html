@@ -39,6 +39,49 @@
   <!-- Add scripts that need to run afterwards here -->
   <script type="text/javascript" src="https://js-cdn.dynatrace.com/jstag/145e12d594f/bf64904yne/8d355b8e439527e1_complete.js" crossorigin="anonymous"></script>
 
+  <script>
+  function toggleFeedbackForm() {
+    var form = document.getElementById('feedback-form-container');
+    
+    // If form is currently hidden
+    if (!form.style.display || form.style.display == "none") {
+      form.style.display = 'block'
+    }
+  }
+  function submitFeedback() {
+      var rating = document.querySelector('input[name="rating"]:checked');
+      var feedback = document.getElementById('feedback-text').value;
+      rating = rating ? rating.value : "None";
+
+      // Note: CURRENT_PAGE is defined in each bizevent-pagename.js
+      
+      // Only send if at least a rating is available
+      if (rating != "None") {
+        console.log("Sending bizevent now for: ", CURRENT_PAGE);
+        console.log(rating, " // ", feedback);
+        dynatrace.sendBizEvent('feedback', {"page": CURRENT_PAGE, "rating": rating, "feedback": feedback });
+      }
+      else {
+        console.log("Missing data. Do not send feedback.")
+      }
+
+      document.getElementById('feedback-form-container').style.display = 'none';
+  }
+  </script>
+
+  <button id="feedback-button" onclick="toggleFeedbackForm()">🚦Feedback</button>
+  <div id="feedback-form-container">
+    <h4>Tutorial Feedback</h4>
+    <p>Use the form below to provide feedback on this page / tutorial as a whole.</p>
+    <div class="rating">
+      <label><input name="rating" type="radio" value="😞"/>😞</label>
+      <label><input name="rating" type="radio" value="😐"/>😐</label>
+      <label><input name="rating" type="radio" value="😊"/>😊</label>
+    </div>
+    <textarea id="feedback-text" placeholder="Your feedback... (optional)" rows="4" style="width: 100%;"></textarea>
+    <button id="feedback-button" onclick="submitFeedback()" style="margin-top: 10px;">➡️ Submit</button>
+  </div>
+
     
       
         
@@ -48,6 +91,8 @@
         <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
       
     
+    
+      <link rel="stylesheet" href="../overrides/assets/stylesheets/extra.css">
     
     <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
@@ -477,8 +522,10 @@
 
 <h1 id="whats-next">What's Next?<a class="headerlink" href="#whats-next" title="Permanent link">#</a></h1>
 <script>
+var CURRENT_PAGE = "5. whats-next";
+
 document.addEventListener('DOMContentLoaded', function() {
-  dynatrace.sendBizEvent('page_load', {"page": "5. whats-next"});
+  dynatrace.sendBizEvent('page_load', {"page": CURRENT_PAGE});
 });
 </script>
 
