@@ -1,0 +1,33 @@
+#feedback-button {
+    position: fixed;
+    right: 2em;
+    bottom: 6em;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    padding: 12px 18px;
+    border-radius: 5px;
+    cursor: pointer;
+    z-index: 1000;
+}
+#feedback-form-container {
+    display: none;
+    position: fixed;
+    right: 1em;
+    bottom: 11em;
+    border: 1px solid #ccc;
+    padding: 15px;
+    width: 250px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    z-index: 1000;
+    background-color: black;
+}
+.rating {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 10px;
+}
+.rating label {
+    font-size: 24px;
+    cursor: pointer;
+}
