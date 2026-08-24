@@ -1,4 +1,4 @@
-Archived
+⚠️ **Archived**
 
 This project is no longer actively maintained. The repository remains available for reference, but no additional features, fixes, or support should be expected.
 
