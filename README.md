@@ -1,3 +1,7 @@
+Archived
+
+This project is no longer actively maintained. The repository remains available for reference, but no additional features, fixes, or support should be expected.
+
 # Observability Lab: Predictive Auto-Scaling for Kubernetes Workloads
 
 Struggling to keep up with the demands of dynamic Kubernetes environments? Manual scaling is not only time-consuming and
